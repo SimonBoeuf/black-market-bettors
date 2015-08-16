@@ -1,0 +1,87 @@
+#main
+  %h1
+    Hello World
+  #navbar
+    %button#summoner-btn
+      Summoner
+    %button#stats-btn
+      Stats
+    %button#champion-btn
+      Champion
+    %button#game-btn
+      Game
+
+  #summoner.tab
+    %h2 Summoner
+    %button#summoner-by-name-btn
+      By Name
+    %button#summoner-by-id-btn
+      By ID
+    %button#summoner-masteries-btn
+      Masteries
+    %button#summoner-by-ids-btn
+      Names by ids
+    %button#summoner-runes-btn
+      Runes
+    %p
+      #summoner-by-name.tab
+        %h3 By name
+        - s = RiotApi::Summoner.get_by_name({region: "euw", name: u("fat logarr")})
+        - name = s.first.first
+        - id = s[name]["id"]
+        = ap(s).html_safe
+      #summoner-by-id.tab
+        %h3 By id
+        - s2 = RiotApi::Summoner.get_by_id({region: "euw", id: id})
+        = ap(s2).html_safe
+      #summoner-masteries.tab
+        %h3 Masteries
+        - masteries = RiotApi::Summoner.get_masteries({region: "euw", id: id})
+        = ap(masteries).html_safe
+      #summoner-by-ids.tab
+        %h3 Names by ids
+        - name = RiotApi::Summoner.get_names({region: "euw", ids: id})
+        = ap(name).html_safe
+      #summoner-runes.tab
+        %h3 Runes
+        - runes = RiotApi::Summoner.get_runes({region: "euw", id: id})
+        = ap(runes).html_safe
+  #stats.tab
+    %h2 Stats
+    %button#stats-ranked-btn
+      Ranked
+    %button#stats-summary-btn
+      Summary
+    %p
+      #stats-ranked.tab
+        %h3 Ranked
+        - ranked = RiotApi::Stats.get_ranked({region: "euw", id: id})
+        = ap(ranked).html_safe
+      #stats-summary.tab
+        %h3 Summary
+        - summary = RiotApi::Stats.get_summary({region: "euw", id: id})
+        = ap(summary).html_safe
+  #champion.tab
+    %h2 Champion
+    %button#champion-all-btn
+      All champions
+    %button#champion-by-id-btn
+      By ID
+    %p
+      #champion-all.tab
+        %h3 All Champions
+        - all = RiotApi::Champion.get_all_champs({region: "euw"})
+        = ap(all).html_safe
+      #champion-by-id.tab
+        %h3 Champion by id
+        - champion = RiotApi::Champion.get_by_id({region: "euw", id: "266"})
+        = ap(champion).html_safe
+
+  #game.tab
+    %h2 Game
+    %button#game-recent-btn
+      Recent games
+    %p
+      #game-recent.tab
+        - recent = RiotApi::Game.get_recent({region: "euw", id: id})
+        = ap(recent).html_safe
