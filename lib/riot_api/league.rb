@@ -24,16 +24,22 @@ class RiotApi::League < RiotApi
     get_api_response(url)
   end
 
-  def self.get_challenger args
+  # parameters
+  #   *type:["RANKED_SOLO_5x5","RANKED_TEAM_3x3","RANKED_TEAM_5x5"]
+  def self.get_challenger args, params = {}
     check_args args, [:region]
+    check_params params, {type: true}
     url = "#{base_league_url(args[:region])}/challenger"
-    get_api_response(url)
+    get_api_response(url, params)
   end
 
-  def self.get_master args
+  # parameters
+  #   *type:["RANKED_SOLO_5x5","RANKED_TEAM_3x3","RANKED_TEAM_5x5"]
+  def self.get_master args, params = {}
     check_args args, [:region]
+    check_params params, {type: true}
     url = "#{base_league_url(args[:region])}/master"
-    get_api_response(url)
+    get_api_response(url, params)
   end
 
   protected

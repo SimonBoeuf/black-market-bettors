@@ -1,5 +1,7 @@
 #main
   %h1
+    -# challenger = RiotApi::League.get_challenger({region: "euw"}, {type: "RANKED_SOLO_5x5"})
+    =# ap(challenger).html_safe
     Hello World
   #navbar
     %button#summoner-btn

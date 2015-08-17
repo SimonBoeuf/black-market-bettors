@@ -1,8 +1,12 @@
 class RiotApi::Champion < RiotApi
-  def self.get_all_champs args
+
+  # parameters
+  #   freeToPlay:Boolean
+  def self.get_all_champs args, params = {}
     check_args args, [:region]
+    check_params(params, {freeToPlay: false})
     url = "#{base_champion_url(args[:region])}"
-    get_api_response(url)
+    get_api_response(url, params)
   end
 
   def self.get_by_id args
