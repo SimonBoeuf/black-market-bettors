@@ -12,6 +12,10 @@ gem 'awesome_print'
 #sass
 gem 'bootstrap-sass'
 
+group :development, :test do
+    gem 'rspec-rails', '~> 3.0'
+end
+
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 
