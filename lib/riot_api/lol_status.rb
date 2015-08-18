@@ -11,9 +11,9 @@ class RiotApi::Lol_Status < RiotApi
     get_api_response(url)
   end
 
-  protected
   def self.base_lol_status_url
     "https://status.leagueoflegends.com/shards"
   end
 
+  private_class_method :base_lol_status_url
 end

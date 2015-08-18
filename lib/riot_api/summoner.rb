@@ -29,9 +29,9 @@ class RiotApi::Summoner < RiotApi
     get_api_response(url)
   end
 
-  protected
   def self.base_summoner_url region
     "#{base_url region}/v1.4/summoner"
   end
 
+  private_class_method :base_summoner_url
 end

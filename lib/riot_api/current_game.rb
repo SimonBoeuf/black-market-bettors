@@ -6,9 +6,9 @@ class RiotApi::Current_Game < RiotApi
     get_api_response(url)
   end
 
-  protected
   def self.base_current_game_url region
     "https://#{region}.api.pvp.net/observer-mode/rest/consumer"
   end
 
+  private_class_method :base_current_game_url
 end

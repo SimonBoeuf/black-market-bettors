@@ -1,5 +1,4 @@
 class RiotApi
-  protected
   def self.base_url region
     "https://#{region}.#{BASE_URL}/#{region}"
   end
@@ -28,11 +27,12 @@ class RiotApi
 
   def self.check_params provided, params
     provided.each do |k, v|
-      raise ArgumentError, "Key not allowed : #{k}. Allowed : #{params.to_s}" unless params.keys.include? k
+      raise ArgumentError, "Key not allowed : #{k}. Allowed : #{params.keys.to_s}" unless params.keys.include? k
     end
     required = params.select{|k, v| v == true}
     required.keys.each do |k|
-      raise ArgumentError, "Missing parameter : #{k}. Required : #{required.to_s}" unless provided.keys.include? k
+      raise ArgumentError, "Missing parameter : #{k}. Required : #{required.keys.to_s}" unless provided.keys.include? k
     end
   end
+  private_class_method :base_url, :format_response, :get_api_response, :check_args, :check_params
 end

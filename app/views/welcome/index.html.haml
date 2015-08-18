@@ -1,6 +1,17 @@
 - region = SAMPLE_MATCHES.to_a.sample.first
-- bmb = RiotApi::Match.get_by_id({region: region.downcase, id: SAMPLE_MATCHES[region].sample})
-= ap(bmb).html_safe
+- matches = Array.new
+- matches.append RiotApi::Match.get_by_id({region: region.downcase, id: SAMPLE_MATCHES[region].sample})
+- matches.append RiotApi::Match.get_by_id({region: region.downcase, id: SAMPLE_MATCHES[region].sample})
+- matches.append RiotApi::Match.get_by_id({region: region.downcase, id: SAMPLE_MATCHES[region].sample})
+- matches.append RiotApi::Match.get_by_id({region: region.downcase, id: SAMPLE_MATCHES[region].sample})
+- matches.append RiotApi::Match.get_by_id({region: region.downcase, id: SAMPLE_MATCHES[region].sample})
+- matches.append RiotApi::Match.get_by_id({region: region.downcase, id: SAMPLE_MATCHES[region].sample})
+- matches.append RiotApi::Match.get_by_id({region: region.downcase, id: SAMPLE_MATCHES[region].sample})
+- matches.append RiotApi::Match.get_by_id({region: region.downcase, id: SAMPLE_MATCHES[region].sample})
+- matches.append RiotApi::Match.get_by_id({region: region.downcase, id: SAMPLE_MATCHES[region].sample})
+- matches.append RiotApi::Match.get_by_id({region: region.downcase, id: SAMPLE_MATCHES[region].sample})
+- matches.append RiotApi::Match.get_by_id({region: region.downcase, id: SAMPLE_MATCHES[region].sample})
+= ap(matches).html_safe
 -#
   #main
     %h1

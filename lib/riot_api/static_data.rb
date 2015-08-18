@@ -151,9 +151,9 @@ class RiotApi::Static_Data < RiotApi
     get_api_response(url)
   end
 
-  protected
   def self.base_static_data_url region
     "https://global.#{BASE_URL}/static-data/#{region}/v1.2"
   end
 
+  private_class_method :base_static_data_url
 end

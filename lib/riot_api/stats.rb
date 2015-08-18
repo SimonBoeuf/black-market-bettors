@@ -11,11 +11,9 @@ class RiotApi::Stats < RiotApi
     get_api_response(url)
   end
 
-
-
-  protected
   def self.base_stats_url region
     "#{base_url region}/v1.3/stats/by-summoner"
   end
 
+  private_class_method :base_stats_url
 end

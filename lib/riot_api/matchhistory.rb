@@ -12,9 +12,9 @@ class RiotApi::Matchhistory < RiotApi
     get_api_response(url, params)
   end
 
-  protected
   def self.base_matchhistory_url region
     "#{base_url region}/v2.2/matchhistory"
   end
 
+  private_class_method :base_matchhistory_url
 end

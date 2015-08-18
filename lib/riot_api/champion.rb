@@ -15,11 +15,9 @@ class RiotApi::Champion < RiotApi
     get_api_response(url)
   end
 
-
-
-  protected
   def self.base_champion_url region
     "#{base_url region}/v1.2/champion"
   end
 
+  private_class_method :base_champion_url
 end

@@ -42,9 +42,9 @@ class RiotApi::League < RiotApi
     get_api_response(url, params)
   end
 
-  protected
   def self.base_league_url region
     "#{base_url region}/v2.5/league"
   end
 
+  private_class_method :base_league_url
 end

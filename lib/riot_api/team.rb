@@ -12,9 +12,9 @@ class RiotApi::Team < RiotApi
     get_api_response(url)
   end
 
-  protected
   def self.base_team_url region
     "#{base_url region}/v2.4/team"
   end
 
+  private_class_method :base_team_url
 end

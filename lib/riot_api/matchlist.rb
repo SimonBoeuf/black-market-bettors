@@ -15,9 +15,9 @@ def self.get_match_list_by_summoner_id args, params = {}
     get_api_response(url)
   end
 
-  protected
   def self.base_matchlist_url region
     "#{base_url region}/v2.2/matchhistory"
   end
 
+  private_class_method :base_matchlist_url
 end
