@@ -1,4 +1,4 @@
-class RiotApi::StaticData < RiotApi
+class RiotApi::Static_Data < RiotApi
 
   # parameters
   #   locale:["en_US,es_ES,...]"

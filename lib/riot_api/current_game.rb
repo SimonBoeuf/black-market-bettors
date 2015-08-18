@@ -1,4 +1,4 @@
-class RiotApi::CurrentGame < RiotApi
+class RiotApi::Current_Game < RiotApi
 
   def self.get_current_game_info args
     check_args args, [:platformId, :summonerId, :region]

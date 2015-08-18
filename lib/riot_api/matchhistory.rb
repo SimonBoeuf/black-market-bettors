@@ -1,4 +1,4 @@
-class RiotApi::MatchHistory < RiotApi
+class RiotApi::Matchhistory < RiotApi
 
   # parameters
   #   championIds: Comma-separated list of champion IDs

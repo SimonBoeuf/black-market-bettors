@@ -1,4 +1,4 @@
-class RiotApi::LolStatus < RiotApi
+class RiotApi::Lol_Status < RiotApi
 
   def self.get_shards_list args = []
     url = "#{base_lol_status_url}"

@@ -1,4 +1,4 @@
-class RiotApi::FeaturedGames < RiotApi
+class RiotApi::Featured_Games < RiotApi
 
   def self.get_featured_games args
     check_args args, [:region]
