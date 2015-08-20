@@ -1,7 +1,7 @@
 - region = SAMPLE_MATCHES.to_a.sample.first
 - sample = Array.new
 - #sample.append RiotApi::Static_Data.get_summoner_spell_by_id({region: "euw", id: 14}, {spellData: "all"})
-- sample.append RiotApi::Static_Data.get_item_by_id({region: "euw", id: 3611},{itemData: "all"})
+- sample.append RiotApi::Static_Data.get_champion_by_id({region: "euw", id: 10},{champData: "all"})
 - #sample.append RiotApi::Match.get_by_id({region: region.downcase, id: SAMPLE_MATCHES[region].sample}, {includeTimeline: true})
 = ap(sample).html_safe
 -#
