@@ -9,7 +9,7 @@ class RiotApi::Static_Data < RiotApi
     check_args args, [:region]
     check_params params, {locale: false, version: false, dataById: false, champData: false}
     url = "#{base_static_data_url(args[:region])}/champion"
-    get_api_response(url, params)
+    get_static_data_api_response(url, params)
   end
 
   # parameters
@@ -20,7 +20,7 @@ class RiotApi::Static_Data < RiotApi
     check_args args, [:id, :region]
     check_params params, {locale: false, version: false, champData: false}
     url = "#{base_static_data_url(args[:region])}/champion/#{args[:id]}"
-    get_api_response(url, params)
+    get_static_data_api_response(url, params)
   end
 
   # parameters
@@ -31,7 +31,7 @@ class RiotApi::Static_Data < RiotApi
     check_args args, [:region]
     check_params params, {locale: false, version: false, itemListData: false}
     url = "#{base_static_data_url(args[:region])}/item"
-    get_api_response(url, params)
+    get_static_data_api_response(url, params)
   end
 
   # parameters
@@ -42,7 +42,7 @@ class RiotApi::Static_Data < RiotApi
     check_args args, [:id, :region]
     check_params params, {locale: false, version: false, itemData: false}
     url = "#{base_static_data_url(args[:region])}/item/#{args[:id]}"
-    get_api_response(url, params)
+    get_static_data_api_response(url, params)
   end
 
   # parameters
@@ -52,13 +52,13 @@ class RiotApi::Static_Data < RiotApi
     check_args args, [:region]
     check_params params, {locale: false, version: false}
     url = "#{base_static_data_url(args[:region])}/language-strings"
-    get_api_response(url, params)
+    get_static_data_api_response(url, params)
   end
 
   def self.get_languages args
     check_args args, [:region]
     url = "#{base_static_data_url(args[:region])}/languages"
-    get_api_response(url)
+    get_static_data_api_response(url)
   end
 
   # parameters
@@ -68,7 +68,7 @@ class RiotApi::Static_Data < RiotApi
     check_args args, [:region]
     check_params params, {locale: false, version: false}
     url = "#{base_static_data_url(args[:region])}/map"
-    get_api_response(url, params)
+    get_static_data_api_response(url, params)
   end
 
   # parameters
@@ -79,7 +79,7 @@ class RiotApi::Static_Data < RiotApi
     check_args args, [:region]
     check_params params, {locale: false, version: false, masteryListData: false}
     url = "#{base_static_data_url(args[:region])}/mastery"
-    get_api_response(url, params)
+    get_static_data_api_response(url, params)
   end
 
   # parameters
@@ -90,13 +90,13 @@ class RiotApi::Static_Data < RiotApi
     check_args args, [:id, :region]
     check_params params, {locale: false, version: false, masteryData: false}
     url = "#{base_static_data_url(args[:region])}/mastery/#{args[:id]}"
-    get_api_response(url, params)
+    get_static_data_api_response(url, params)
   end
 
   def self.get_realm args
     check_args args, [:region]
     url = "#{base_static_data_url(args[:region])}/realm"
-    get_api_response(url)
+    get_static_data_api_response(url)
   end
 
   # parameters
@@ -107,7 +107,7 @@ class RiotApi::Static_Data < RiotApi
     check_args args, [:region]
     check_params params, {locale: false, version: false, runeListData: false}
     url = "#{base_static_data_url(args[:region])}/rune"
-    get_api_response(url, params)
+    get_static_data_api_response(url, params)
   end
 
   # parameters
@@ -118,7 +118,7 @@ class RiotApi::Static_Data < RiotApi
     check_args args, [:id, :region]
     check_params params, {locale: false, version: false, runeData: false}
     url = "#{base_static_data_url(args[:region])}/rune/#{args[:id]}"
-    get_api_response(url, params)
+    get_static_data_api_response(url, params)
   end
 
   # parameters
@@ -130,7 +130,7 @@ class RiotApi::Static_Data < RiotApi
     check_args args, [:region]
     check_params params, {locale: false, version: false, dataById: false, spellData: false}
     url = "#{base_static_data_url(args[:region])}/summoner-spell"
-    get_api_response(url, params)
+    get_static_data_api_response(url, params)
   end
 
   # parameters
@@ -141,14 +141,14 @@ class RiotApi::Static_Data < RiotApi
     check_args args, [:id, :region]
     check_params params, {locale: false, version: false, spellData: false}
     url = "#{base_static_data_url(args[:region])}/summoner-spell/#{args[:id]}"
-    get_api_response(url, params)
+    get_static_data_api_response(url, params)
   end
 
 
   def self.get_versions_lists args
     check_args args, [:region]
     url = "#{base_static_data_url(args[:region])}/versions"
-    get_api_response(url)
+    get_static_data_api_response(url)
   end
 
   def self.base_static_data_url region

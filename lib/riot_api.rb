@@ -7,7 +7,7 @@ class RiotApi
     JSON.parse(res.body)
   end
 
-  def self.get_api_response base_url, params = []
+  def self.get_api_response base_url, params = {}
     url_with_params = "#{base_url}?api_key=#{API_KEY}"
     params.each do |k, v|
       url_with_params += "&#{k}=#{v}"
@@ -17,6 +17,18 @@ class RiotApi
     http = Net::HTTP.new(url.host, url.port)
     http.use_ssl = (url.scheme == "https")
     queue_api_request TIME_OFFSET
+    format_response(http.request(req))
+  end
+
+  def self.get_static_data_api_response base_url, params = {}
+    url_with_params = "#{base_url}?api_key=#{API_KEY}"
+    params.each do |k, v|
+      url_with_params += "&#{k}=#{v}"
+    end
+    url = URI.parse(url_with_params)
+    req = Net::HTTP::Get.new(url.request_uri)
+    http = Net::HTTP.new(url.host, url.port)
+    http.use_ssl = (url.scheme == "https")
     format_response(http.request(req))
   end
 
