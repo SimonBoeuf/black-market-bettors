@@ -11,7 +11,8 @@
 %br
 %img{src: StaticData::Champion.get_splash_image(i, c['name'], 0, "euw")}
 %br
-%img{src: StaticData::Champion.get_loading_image(i, c['name'], 0, "euw")}
+- c['skins'].each do |skin|
+  %img{src: StaticData::Champion.get_loading_image(i, c['name'], skin['num'], "euw")}
 -#
   #main
     %h1
