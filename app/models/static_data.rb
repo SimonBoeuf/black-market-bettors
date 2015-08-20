@@ -8,7 +8,7 @@ class StaticData < ActiveRecord::Base
   end
 
   def self.get_sprite_image img, region
-    "#{get_base_dragon_url(region)}/img/#{img.group}/#{img.full}"
+    "#{get_base_dragon_url(region)}/img/sprite/#{img.sprite}"
   end
 
   def self.get_base_dragon_url region
