@@ -47,6 +47,7 @@ class RiotApi
       raise ArgumentError, "Missing parameter : #{k}. Required : #{required.keys.to_s}" unless provided.keys.include? k
     end
   end
+
   def self.queue_api_request offset
     @last_request ||= Time.now
     while (Time.now < (@last_request + offset)) do end

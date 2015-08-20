@@ -1,9 +1,17 @@
 - region = SAMPLE_MATCHES.to_a.sample.first
 - sample = Array.new
 - #sample.append RiotApi::Static_Data.get_summoner_spell_by_id({region: "euw", id: 14}, {spellData: "all"})
-- sample.append RiotApi::Static_Data.get_champion_by_id({region: "euw", id: 10},{champData: "all"})
+- sample.append (c = RiotApi::Static_Data.get_champion_by_id({region: "euw", id: 10},{champData: "all"}))
 - #sample.append RiotApi::Match.get_by_id({region: region.downcase, id: SAMPLE_MATCHES[region].sample}, {includeTimeline: true})
-= ap(sample).html_safe
+= #ap(sample).html_safe
+- i = StaticData::Image.new(c['image'])
+%img{src: StaticData.get_full_image(i, "euw")}
+%br
+%img{src: StaticData.get_sprite_image(i, "euw")}
+%br
+%img{src: StaticData::Champion.get_splash_image(i, c['name'], 0, "euw")}
+%br
+%img{src: StaticData::Champion.get_loading_image(i, c['name'], 0, "euw")}
 -#
   #main
     %h1

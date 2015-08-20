@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150820153029) do
+ActiveRecord::Schema.define(version: 20150820211807) do
 
   create_table "events", force: true do |t|
     t.integer  "frame_id"
@@ -74,14 +74,14 @@ ActiveRecord::Schema.define(version: 20150820153029) do
 
   create_table "mastery_points", force: true do |t|
     t.integer  "participant_id"
-    t.integer  "static_data_mastery_id"
+    t.integer  "mastery_id"
     t.integer  "rank"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "participants", force: true do |t|
-    t.integer  "static_data_champion_id"
+    t.integer  "champion_id"
     t.integer  "game_id"
     t.integer  "highestAchievedSeasonTier"
     t.integer  "particpantId"
@@ -142,6 +142,16 @@ ActiveRecord::Schema.define(version: 20150820153029) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "static_data_skins", force: true do |t|
+    t.integer  "champion_id"
+    t.string   "name"
+    t.integer  "num"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "static_data_skins", ["champion_id"], name: "index_static_data_skins_on_champion_id"
 
   create_table "static_data_summoner_spells", force: true do |t|
     t.string   "name"
