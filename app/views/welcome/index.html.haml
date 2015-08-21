@@ -1,18 +1,20 @@
 - region = SAMPLE_MATCHES.to_a.sample.first
 - sample = Array.new
 - #sample.append RiotApi::Static_Data.get_summoner_spell_by_id({region: "euw", id: 14}, {spellData: "all"})
-- sample.append (c = RiotApi::Static_Data.get_champion_by_id({region: "euw", id: 10},{champData: "all"}))
+- randomId = RiotApi::Static_Data.get_champion_list({region: "euw"})["data"].to_a.sample.last['id']
+- sample.append (c = RiotApi::Static_Data.get_champion_by_id({region: "euw", id: randomId},{champData: "all"}))
 - #sample.append RiotApi::Match.get_by_id({region: region.downcase, id: SAMPLE_MATCHES[region].sample}, {includeTimeline: true})
 = #ap(sample).html_safe
 - i = StaticData::Image.new(c['image'])
+= ap(i).html_safe
 %img{src: StaticData.get_full_image(i, "euw")}
 %br
-%img{src: StaticData.get_sprite_image(i, "euw")}
+#test_sprite{style: get_sprite_style(i)}
 %br
-%img{src: StaticData::Champion.get_splash_image(i, c['name'], 0, "euw")}
+%img{src: StaticData::Champion.get_splash_image(i, u(c['key']), 0, "euw")}
 %br
 - c['skins'].each do |skin|
-  %img{src: StaticData::Champion.get_loading_image(i, c['name'], skin['num'], "euw")}
+  %img{src: StaticData::Champion.get_loading_image(i, u(c['key']), skin['num'], "euw")}
 -#
   #main
     %h1
@@ -24,7 +26,7 @@
         Summoner
       %button#stats-btn
         Stats
-      %button#champion-btn
+      %button#champion-s
         Champion
       %button#game-btn
         Game
