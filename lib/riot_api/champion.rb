@@ -2,6 +2,7 @@ class RiotApi::Champion < RiotApi
 
   # parameters
   #   freeToPlay:Boolean
+
   def self.get_all_champs args, params = {}
     check_args args, [:region]
     check_params(params, {freeToPlay: false})

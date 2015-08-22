@@ -11,13 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150820211807) do
+ActiveRecord::Schema.define(version: 20150822163512) do
 
   create_table "events", force: true do |t|
     t.integer  "frame_id"
     t.integer  "ascendedType"
     t.integer  "buildingType"
-    t.integer  "evenType"
+    t.integer  "eventType"
     t.integer  "laneType"
     t.integer  "levelUpType"
     t.integer  "monsterType"
@@ -28,15 +28,16 @@ ActiveRecord::Schema.define(version: 20150820211807) do
     t.integer  "itemAfter"
     t.integer  "itemBefore"
     t.integer  "killerId"
-    t.integer  "participantId"
+    t.integer  "participant_id"
     t.integer  "positionX"
     t.integer  "positionY"
     t.integer  "skillSlot"
     t.integer  "teamId"
-    t.integer  "timeStamp"
+    t.integer  "timestamp"
     t.integer  "victimId"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "itemId"
   end
 
   create_table "events_participants", force: true do |t|
@@ -51,6 +52,7 @@ ActiveRecord::Schema.define(version: 20150820211807) do
     t.integer  "timeline_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "timestamp"
   end
 
   create_table "games", force: true do |t|
@@ -90,6 +92,7 @@ ActiveRecord::Schema.define(version: 20150820211807) do
     t.integer  "team_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "participantId"
   end
 
   create_table "rune_points", force: true do |t|
@@ -158,6 +161,7 @@ ActiveRecord::Schema.define(version: 20150820211807) do
     t.integer  "image_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "key"
   end
 
   create_table "teams", force: true do |t|
@@ -165,6 +169,7 @@ ActiveRecord::Schema.define(version: 20150820211807) do
     t.integer  "game_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "winner"
   end
 
   create_table "timelines", force: true do |t|

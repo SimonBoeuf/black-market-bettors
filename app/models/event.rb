@@ -12,5 +12,35 @@ class Event < ActiveRecord::Base
   enum towerType: [:BASE_TURRET, :FOUNTAIN_TURRET, :INNER_TURRET, :NEXUS_TURRET, :OUTER_TURRET, :UNDEFINED_TURRET]
   enum wardType: [:SIGHT_WARD, :TEEMO_MUSHROOM, :UNDEFINED, :VISION_WARD, :YELLOW_TRINKET, :YELLOW_TRINKET_UPGRADE]
 
-  #attr_accessible :creatorId, :itemAfter, :itemBefore, :itemId, :killerId, :participantId, :position, :skillSlot, :teamId, :timestamp, :towerType, :victimId, :wardType
+  #attr_accessible :creatorId, :itemAfter, :itemBefore, :itemId, :killerId, :position, :skillSlot, :teamId, :timestamp, :towerType, :victimId, :wardType
+  def self.build_from_array array, game_id
+    res = []
+    array.each do |json|
+      res.append build_from_json(json, game_id)
+    end
+    res
+  end
+
+  def self.build_from_json json, game_id
+    #participant
+    p = json.select{|k, v| atomic_attributes.include? k}
+    p['positionX'] = json['position']['x'] if json['position']
+    p['positionY'] = json['position']['y'] if json['position']
+    p['participant'] = Participant.where(game_id: game_id, participantId: json['participantId']).first
+    if json['assistingParticipantIds']
+      p['assisting_participants'] = []
+      json['assistingParticipantIds'].each do |participantId|
+        p['assisting_participants'].append Participant.where(game_id: game_id, participantId: participantId).first
+      end
+    end
+    create(p)
+  end
+
+  def self.atomic_attributes
+    ["ascendedType", "buildingType", "eventType", "laneType", "levelUpType", "monsterType", "pointCaptured", "towerType", "wardType", "creatorId",
+     "itemAfter", "itemBefore", "itemId", "killerId", "skillSlot", "teamId", "timestamp", "towerType", "victimId", "wardType" ]
+  end
+
+
+  private_class_method :atomic_attributes
 end
