@@ -14,6 +14,10 @@ class Game < ActiveRecord::Base
   #attr_accessible :matchId, :region, :platformId, :matchCreation, :matchDuration, :mapId, :matchVersion
 
 
+  def self.find_or_build_from_json json
+    find_by_id(json['matchId']) || build_from_json(json)
+  end
+
   def self.build_from_json json
     p = json.select{|k, v| atomic_attributes.include? k}
     game_id = json['matchId']
@@ -30,6 +34,6 @@ class Game < ActiveRecord::Base
     ["matchId", "region", "platformId", "matchCreation", "matchDuration", "mapId", "matchVersion", "matchMode", "matchType", "queueType", "season"]
   end
 
-  private_class_method :atomic_attributes
+  private_class_method :atomic_attributes, :build_from_json
 
 end
