@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150822233912) do
+ActiveRecord::Schema.define(version: 20150823012840) do
 
   create_table "events", force: true do |t|
     t.integer  "frame_id"
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 20150822233912) do
     t.integer  "victimId"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "itemId"
+    t.integer  "item_id"
   end
 
   create_table "events_participants", force: true do |t|
@@ -144,6 +144,18 @@ ActiveRecord::Schema.define(version: 20150822233912) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "static_data_items", force: true do |t|
+    t.string   "name"
+    t.string   "group"
+    t.string   "sanitizedDescription"
+    t.string   "plaintext"
+    t.integer  "image_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "static_data_items", ["image_id"], name: "index_static_data_items_on_image_id"
 
   create_table "static_data_masteries", force: true do |t|
     t.integer  "image_id"

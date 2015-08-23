@@ -1,9 +1,8 @@
 class Event < ActiveRecord::Base
   belongs_to :frame
   belongs_to :participant
-
   belongs_to :team
-  belongs_to :static_data_item
+  belongs_to :item, :class_name => 'StaticData::Item'
 
   has_and_belongs_to_many :assisting_participants, join_table: 'events_participants', class_name: 'Participant'
   enum ascendedType: [ :CHAMPION_ASCENDED, :CLEAR_ASCENDED, :MINION_ASCENDED ]
@@ -31,6 +30,7 @@ class Event < ActiveRecord::Base
     p['positionX'] = json['position']['x'] if json['position']
     p['positionY'] = json['position']['y'] if json['position']
     p['participant'] = Participant.where(game_id: game_id, participantId: json['participantId']).first
+    p['item'] = StaticData::Item.find_or_build_by_id(json['itemId']) if json['itemId'] && json['itemId'] != 1501 #404
     if json['assistingParticipantIds']
       p['assisting_participants'] = []
       json['assistingParticipantIds'].each do |participantId|
@@ -42,7 +42,7 @@ class Event < ActiveRecord::Base
 
   def self.atomic_attributes
     ["ascendedType", "buildingType", "eventType", "laneType", "levelUpType", "monsterType", "pointCaptured", "towerType", "wardType", "creatorId",
-     "itemAfter", "itemBefore", "itemId", "killerId", "skillSlot", "teamId", "timestamp", "towerType", "victimId", "wardType" ]
+     "itemAfter", "itemBefore", "killerId", "skillSlot", "teamId", "timestamp", "towerType", "victimId", "wardType" ]
   end
 
 
