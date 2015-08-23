@@ -4,7 +4,7 @@ class CurrentGameSingleton
   def initialize
     region = SAMPLE_MATCHES.to_a.sample.first
     json = RiotApi::Match.get_by_id({region: region.downcase, id: SAMPLE_MATCHES[region].sample}, {includeTimeline: true})
-    @game = Game.build_from_json json
+    @game = Game.find_or_build_from_json json
   end
 
   def game

@@ -4,7 +4,11 @@ class RiotApi
   end
 
   def self.format_response res
-    JSON.parse(res.body)
+    begin
+      JSON.parse(res.body)
+    rescue
+      raise Exception, "Response is not Json. <br/>Code : #{res.code} <br/>Headers : #{res.to_hash.inspect}<br/>Body : #{ap res.body}".html_safe
+    end
   end
 
   def self.get_api_response base_url, params = {}

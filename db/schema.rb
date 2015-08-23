@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150822163512) do
+ActiveRecord::Schema.define(version: 20150822233912) do
 
   create_table "events", force: true do |t|
     t.integer  "frame_id"
@@ -81,6 +81,22 @@ ActiveRecord::Schema.define(version: 20150822163512) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "participant_frames", force: true do |t|
+    t.integer  "participant_id"
+    t.integer  "totalGold"
+    t.integer  "level"
+    t.integer  "minionsKilled"
+    t.integer  "jungleMinionsKilled"
+    t.integer  "frame_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "positionX"
+    t.integer  "positionY"
+  end
+
+  add_index "participant_frames", ["frame_id"], name: "index_participant_frames_on_frame_id"
+  add_index "participant_frames", ["participant_id"], name: "index_participant_frames_on_participant_id"
 
   create_table "participants", force: true do |t|
     t.integer  "champion_id"

@@ -1,6 +1,10 @@
 class Event < ActiveRecord::Base
   belongs_to :frame
   belongs_to :participant
+
+  belongs_to :team
+  belongs_to :static_data_item
+
   has_and_belongs_to_many :assisting_participants, join_table: 'events_participants', class_name: 'Participant'
   enum ascendedType: [ :CHAMPION_ASCENDED, :CLEAR_ASCENDED, :MINION_ASCENDED ]
   enum buildingType: [:INHIBITOR_BUILDING, :TOWER_BUILDING]
@@ -12,7 +16,7 @@ class Event < ActiveRecord::Base
   enum towerType: [:BASE_TURRET, :FOUNTAIN_TURRET, :INNER_TURRET, :NEXUS_TURRET, :OUTER_TURRET, :UNDEFINED_TURRET]
   enum wardType: [:SIGHT_WARD, :TEEMO_MUSHROOM, :UNDEFINED, :VISION_WARD, :YELLOW_TRINKET, :YELLOW_TRINKET_UPGRADE]
 
-  #attr_accessible :creatorId, :itemAfter, :itemBefore, :itemId, :killerId, :position, :skillSlot, :teamId, :timestamp, :towerType, :victimId, :wardType
+  #attr_accessible :creatorId, :itemAfter, :itemBefore, :itemId, :killerId, :position, :skillSlot, :timestamp, :towerType, :victimId, :wardType
   def self.build_from_array array, game_id
     res = []
     array.each do |json|

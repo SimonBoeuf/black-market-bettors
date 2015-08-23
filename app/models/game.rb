@@ -28,6 +28,7 @@ class Game < ActiveRecord::Base
     g = create(p)
     g.timeline = Timeline.build_from_json(json['timeline'].merge({"game_id" => game_id}))
     g.save
+    return g
   end
 
   def self.atomic_attributes
