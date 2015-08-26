@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+//= require websocket_rails/main
 $(document).ready(function(){
     $("#summoner-btn").click(function(){
         $("#summoner").toggle();
@@ -62,4 +63,5 @@ $(document).ready(function(){
     $("#game-recent-btn").click(function(){
         $("#game-recent").toggle();
     });
-});
+});//= require websocket_rails/main
+

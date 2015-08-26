@@ -8,6 +8,9 @@ gem 'rails', '4.1.6'
 #haml
 gem 'haml'
 
+#faye
+gem 'websocket-rails'
+
 #awesome_print
 gem 'awesome_print'
 

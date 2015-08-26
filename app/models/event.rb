@@ -15,6 +15,9 @@ class Event < ActiveRecord::Base
   enum towerType: [:BASE_TURRET, :FOUNTAIN_TURRET, :INNER_TURRET, :NEXUS_TURRET, :OUTER_TURRET, :UNDEFINED_TURRET]
   enum wardType: [:SIGHT_WARD, :TEEMO_MUSHROOM, :UNDEFINED, :VISION_WARD, :YELLOW_TRINKET, :YELLOW_TRINKET_UPGRADE]
 
+  scope :allowed_msg, -> { where(eventType: allowed_types) }
+
+
   #attr_accessible :creatorId, :itemAfter, :itemBefore, :itemId, :killerId, :position, :skillSlot, :timestamp, :towerType, :victimId, :wardType
   def self.build_from_array array, game_id
     res = []
@@ -38,6 +41,13 @@ class Event < ActiveRecord::Base
       end
     end
     create(p)
+  end
+
+  def self.allowed_types
+    #[:BUILDING_KILL, :CHAMPION_KILL, :ELITE_MONSTER_KILL, :ITEM_DESTROYED, :ITEM_PURCHASED, :ITEM_SOLD, :ITEM_UNDO, :SKILL_LEVEL_UP] #This should work??
+    [Event.eventTypes[:BUILDING_KILL], Event.eventTypes[:CHAMPION_KILL], Event.eventTypes[:ELITE_MONSTER_KILL],
+     Event.eventTypes[:ITEM_DESTROYED], Event.eventTypes[:ITEM_PURCHASED], Event.eventTypes[:ITEM_SOLD], Event.eventTypes[:ITEM_UNDO],
+     Event.eventTypes[:SKILL_LEVEL_UP]]
   end
 
   def self.atomic_attributes

@@ -11,6 +11,7 @@ class Game < ActiveRecord::Base
                    :NIGHTMARE_BOT_5x5_RANK1, :NIGHTMARE_BOT_5x5_RANK2, :NIGHTMARE_BOT_5x5_RANK5, :ASCENSION_5x5, :HEXAKILL, :BILGEWATER_ARAM_5x5, :KING_PORO_5x5,
                    :COUNTER_PICK, :BILGEWATER_5x5]
   enum season: [:PRESEASON3, :SEASON3, :PRESEASON2014, :SEASON2014, :PRESEASON2015, :SEASON2015]
+
   #attr_accessible :matchId, :region, :platformId, :matchCreation, :matchDuration, :mapId, :matchVersion
 
 
@@ -34,6 +35,13 @@ class Game < ActiveRecord::Base
   def self.atomic_attributes
     ["matchId", "region", "platformId", "matchCreation", "matchDuration", "mapId", "matchVersion", "matchMode", "matchType", "queueType", "season"]
   end
+
+  def get_next_msg msg
+    next_frame = msg[:frame] ? msg[:event] ? msg[:frame] : timeline.frames.order(:timestamp).where("timestamp > #{msg[:frame].timestamp}").first : timeline.frames.order(:timestamp).first
+    next_event = msg[:event] ? msg[:frame].events.allowed_msg.order(:timestamp).where("timestamp > #{msg[:event].timestamp}").first : next_frame.events.order(:timestamp).first
+    {frame: next_frame, event: next_event}
+  end
+
 
   private_class_method :atomic_attributes, :build_from_json
 
