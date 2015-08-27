@@ -44,7 +44,8 @@ class Participant < ActiveRecord::Base
     deaths: 0,
     assists: 0,
     items: [],
-    bralwer:
+    trinket: nil,
+    brawler:
         {type: nil,
         evolve: nil},
     gold: 0}

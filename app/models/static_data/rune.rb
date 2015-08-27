@@ -1,5 +1,5 @@
 class StaticData::Rune < StaticData
-  belongs_to :image, :class_name => 'StaticData::Image'
+  belongs_to :image, dependent: :destroy
   #attr_accessible :name
 
   def self.find_or_build_by_id id

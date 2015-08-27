@@ -1,6 +1,6 @@
 class StaticData::Champion < StaticData
-  belongs_to :image, :class_name => 'StaticData::Image'
-  has_many :skins, :class_name => 'StaticData::Skin'
+  belongs_to :image, dependent: :destroy
+  has_many :skins, dependent: :destroy
 
   def self.find_or_build_by_id id
     r = find_by_id(id)

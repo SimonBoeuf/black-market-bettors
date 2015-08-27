@@ -17,7 +17,7 @@ class RiotApi
     http = Net::HTTP.new(url.host, url.port)
     http.use_ssl = (url.scheme == "https")
     loop do
-      ap "Trying again : #{@res.code}, #{@res.to_hash.inspect}" if @res
+      ap "Trying again : #{@res.code}, #{@res.to_hash.inspect}" if @res && @res.code != "200"
       queue_api_request TIME_OFFSET
       break if ((@res = http.request(req)).code == '200')
     end
@@ -33,7 +33,8 @@ class RiotApi
     req = Net::HTTP::Get.new(url.request_uri)
     http = Net::HTTP.new(url.host, url.port)
     http.use_ssl = (url.scheme == "https")
-    format_response(http.request(req))
+    res = http.request(req)
+    res.code == "200" ? format_response(res) : nil
   end
 
   def self.check_args provided, expected

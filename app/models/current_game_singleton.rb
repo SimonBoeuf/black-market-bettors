@@ -100,9 +100,9 @@ class CurrentGameSingleton
         when "ELITE_MONSTER_KILL"
           process_elite_monster_kill(event)
         when "ITEM_DESTROYED" || "ITEM_SOLD" || "ITEM_UNDO"
-          process_item_remove(event)
+          process_item_remove(event) if !event.item.nil? #1501 not found
         when "ITEM_PURCHASED"
-          process_item_add(event)
+          process_item_add(event) if !event.item.nil? #1501 not found
         when "SKILL_LEVEL_UP" && event.NORMAL?
           process_skill_level_up(event)
       end
@@ -142,11 +142,21 @@ class CurrentGameSingleton
   end
 
   def process_item_remove event
-    #TODO process brawler
+    if !event.item.consumed?
+      get_participant(event.participant.participantId)[:items].delete_if{|item| item[:id] == event.item.id}
+    end
   end
 
   def process_item_add event
-    #TODO process brawler
+    if event.item.is_brawler?
+      get_participant(event.participant.participantId)[:brawler][:type] = JSON.parse(StaticData::Item.find_or_build_by_id(event.item.id).to_json(include: :image))
+    elsif event.item.is_brawler_upgrade?
+      get_participant(event.participant.participantId)[:brawler][:evolve] = JSON.parse(StaticData::Item.find_or_build_by_id(event.item.id).to_json(include: :image))
+    elsif event.item.group == 'RelicBase'
+      get_participant(event.participant.participantId)[:trinket] = JSON.parse(StaticData::Item.find_or_build_by_id(event.item.id).to_json(include: :image))
+    elsif !event.item.consumed?
+      get_participant(event.participant.participantId)[:items].append(JSON.parse(StaticData::Item.find_or_build_by_id(event.item.id).to_json(include: :image)))
+    end
   end
 
   def process_skill_level_up event

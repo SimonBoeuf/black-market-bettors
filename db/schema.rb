@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150826201742) do
+ActiveRecord::Schema.define(version: 20150827131147) do
 
   create_table "events", force: true do |t|
     t.integer  "frame_id"
@@ -152,6 +152,9 @@ ActiveRecord::Schema.define(version: 20150826201742) do
     t.integer  "image_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "description"
+    t.boolean  "consumable"
+    t.boolean  "consumed"
   end
 
   add_index "static_data_items", ["image_id"], name: "index_static_data_items_on_image_id"
