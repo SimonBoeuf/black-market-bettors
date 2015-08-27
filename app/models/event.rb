@@ -54,6 +54,29 @@ class Event < ActiveRecord::Base
      "itemAfter", "itemBefore", "killerId", "skillSlot", "teamId", "timestamp", "towerType", "victimId", "wardType" ]
   end
 
+  def to_hash
+    {id: id,
+    frame: frame,
+    buildingType: buildingType,
+    eventType: eventType,
+    laneType: laneType,
+    levelUpType: levelUpType,
+    monsterType: monsterType,
+    towerType: towerType,
+    wardType: wardType,
+    creatorId: creatorId,
+    itemAfter: itemAfter,
+    itemBefore: itemBefore,
+    killerId: killerId,
+    participant: participant ? participant.to_hash : nil,
+    positionX: positionX,
+    positionY: positionY,
+    skillSlot: skillSlot,
+    teamId: teamId,
+    timestamp: timestamp,
+    victimId: victimId,
+    item: item ? JSON.parse(item.to_json(include: :image)) : nil}
+  end
 
   private_class_method :atomic_attributes
 end

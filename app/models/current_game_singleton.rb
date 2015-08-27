@@ -17,7 +17,7 @@ class CurrentGameSingleton
     @game_state || {state: "No game running"}
   end
 
-  private
+  #private
 
   def initialize
     @status = :loading
@@ -173,6 +173,6 @@ class CurrentGameSingleton
   end
 
   def format_msg
-    {status: "running", type: @msg[:event] ? "event" : "frame", data: @msg[:event] || @msg[:frame], wait: get_next_timestamp}
+    {status: "running", type: @msg[:event] ? "event" : "frame", data: @msg[:event] ? @msg[:event].to_hash : @msg[:frame], wait: get_next_timestamp}
   end
 end
