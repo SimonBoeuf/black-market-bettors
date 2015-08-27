@@ -20,6 +20,6 @@ class Frame < ActiveRecord::Base
   end
 
   def total_gold(team)
-    participant_frames.joins(:participant).where("participantId between #{team == :blue_team ? "1 AND 5" : "6 AND 10"}").sum(:totalGold) # I deserve death for this. TODO Refacto ASAP
+    participant_frames.joins(:participant).where("\"participants\".\"participantId\" between #{team == :blue_team ? "1 AND 5" : "6 AND 10"}").sum(:totalGold) # I deserve death for this. TODO Refacto ASAP
   end
 end

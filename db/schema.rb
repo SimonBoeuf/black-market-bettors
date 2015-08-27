@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150827144930) do
+ActiveRecord::Schema.define(version: 20150827150829) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,7 +62,7 @@ ActiveRecord::Schema.define(version: 20150827144930) do
     t.integer  "mapId"
     t.integer  "matchCreation", limit: 8
     t.integer  "matchDuration", limit: 8
-    t.integer  "matchId"
+    t.integer  "matchId",       limit: 8
     t.integer  "matchMode"
     t.integer  "matchType"
     t.string   "matchVersion"
