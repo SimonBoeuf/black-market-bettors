@@ -5,20 +5,19 @@ class TimelineMessagesController < WebsocketRails::BaseController
   end
 
   def update msg
-    broadcast_message :my_event_server, {message: msg}
+    send_message :my_event_server, {message: msg}
   end
 
   def client_connected
     CurrentGameSingleton.instance.add_observer(self)
-    broadcast_message :my_event_server, {message: {status: "loading", data: CurrentGameSingleton.instance.champions}} if CurrentGameSingleton.instance.status == :loading
+    CurrentGameSingleton.instance.status == :loading ?
+        send_message(:my_event_server, {message: {status: "loading", data: CurrentGameSingleton.instance.champions}}) :
+        send_message(:my_event_server, {message: {status: "running", data: {type: "game_state", data: CurrentGameSingleton.instance.game_state}}})
+
   end
 
   def delete_user
 
   end
 
-  def send_message
-    new_message = {:message => "this is a message from server. Original message :"}
-    broadcast_message :my_event_server, new_message
-  end
 end

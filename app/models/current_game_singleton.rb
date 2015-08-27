@@ -4,6 +4,21 @@ class CurrentGameSingleton
   include Singleton
   include Observable
 
+
+  def status
+    @status
+  end
+
+  def champions
+    @champions
+  end
+
+  def game_state
+    @game_state || {state: "No game running"}
+  end
+
+  private
+
   def initialize
     @status = :loading
     region = SAMPLE_MATCHES.to_a.sample.first
@@ -39,32 +54,16 @@ class CurrentGameSingleton
     initialize
   end
 
-  def status
-    @status
-  end
-
-  def champions
-    @champions
-  end
-
-  def game_state
-    @game_state
-  end
-
-  def game
-    @game
-  end
-
-  def format_msg
-    {status: "running", type: @msg[:event] ? "event" : "frame", data: @msg[:event] || @msg[:frame], wait: get_next_timestamp}
-  end
-
   def launch_next_msg
     @msg = @next_msg
     @next_msg = @game.get_next_msg(@msg)
     process_event
     changed
     notify_observers(format_msg)
+  end
+
+  def game
+    @game
   end
 
   def msg
@@ -171,5 +170,9 @@ class CurrentGameSingleton
 
   def get_participant id
     @game_state[Team.get_color_by_participant(id)][:participants].select{|p| p[:participantId] == id}.first
+  end
+
+  def format_msg
+    {status: "running", type: @msg[:event] ? "event" : "frame", data: @msg[:event] || @msg[:frame], wait: get_next_timestamp}
   end
 end
