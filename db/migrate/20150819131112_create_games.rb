@@ -4,7 +4,7 @@ class CreateGames < ActiveRecord::Migration
       t.integer :mapId
       t.integer :matchCreation
       t.integer :matchDuration
-      t.integer :matchId
+      t.integer :matchId, limit: 8
       t.integer :matchMode
       t.integer :matchType
       t.string :matchVersion

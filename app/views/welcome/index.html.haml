@@ -1,6 +1,6 @@
 :javascript
   $(document).ready(function() {
-    var dispatcher = new WebSocketRails('127.0.0.1:3000/websocket');
+    var dispatcher = new WebSocketRails("#{request.host_with_port}/websocket");
     dispatcher.on_open = function (data) {
         console.log('Connection has been established: ', data);
         // You can trigger new server events inside this callback if you wish.
