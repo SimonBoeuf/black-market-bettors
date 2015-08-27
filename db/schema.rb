@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150827131147) do
+ActiveRecord::Schema.define(version: 20150827144531) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "events", force: true do |t|
     t.integer  "frame_id"
@@ -45,8 +48,8 @@ ActiveRecord::Schema.define(version: 20150827131147) do
     t.integer "participant_id"
   end
 
-  add_index "events_participants", ["event_id"], name: "index_events_participants_on_event_id"
-  add_index "events_participants", ["participant_id"], name: "index_events_participants_on_participant_id"
+  add_index "events_participants", ["event_id"], name: "index_events_participants_on_event_id", using: :btree
+  add_index "events_participants", ["participant_id"], name: "index_events_participants_on_participant_id", using: :btree
 
   create_table "frames", force: true do |t|
     t.integer  "timeline_id"
@@ -57,7 +60,7 @@ ActiveRecord::Schema.define(version: 20150827131147) do
 
   create_table "games", force: true do |t|
     t.integer  "mapId"
-    t.integer  "matchCreation"
+    t.integer  "matchCreation", limit: 8
     t.integer  "matchDuration"
     t.integer  "matchId"
     t.integer  "matchMode"
@@ -95,8 +98,8 @@ ActiveRecord::Schema.define(version: 20150827131147) do
     t.integer  "positionY"
   end
 
-  add_index "participant_frames", ["frame_id"], name: "index_participant_frames_on_frame_id"
-  add_index "participant_frames", ["participant_id"], name: "index_participant_frames_on_participant_id"
+  add_index "participant_frames", ["frame_id"], name: "index_participant_frames_on_frame_id", using: :btree
+  add_index "participant_frames", ["participant_id"], name: "index_participant_frames_on_participant_id", using: :btree
 
   create_table "participants", force: true do |t|
     t.integer  "champion_id"
@@ -147,8 +150,8 @@ ActiveRecord::Schema.define(version: 20150827131147) do
   create_table "static_data_items", force: true do |t|
     t.string   "name"
     t.string   "group"
-    t.string   "sanitizedDescription"
-    t.string   "plaintext"
+    t.text     "sanitizedDescription"
+    t.text     "plaintext"
     t.integer  "image_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -157,7 +160,7 @@ ActiveRecord::Schema.define(version: 20150827131147) do
     t.boolean  "consumed"
   end
 
-  add_index "static_data_items", ["image_id"], name: "index_static_data_items_on_image_id"
+  add_index "static_data_items", ["image_id"], name: "index_static_data_items_on_image_id", using: :btree
 
   create_table "static_data_masteries", force: true do |t|
     t.integer  "image_id"
@@ -184,7 +187,7 @@ ActiveRecord::Schema.define(version: 20150827131147) do
     t.datetime "updated_at"
   end
 
-  add_index "static_data_skins", ["champion_id"], name: "index_static_data_skins_on_champion_id"
+  add_index "static_data_skins", ["champion_id"], name: "index_static_data_skins_on_champion_id", using: :btree
 
   create_table "static_data_summoner_spells", force: true do |t|
     t.string   "name"

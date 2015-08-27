@@ -13,7 +13,6 @@ class TimelineMessagesController < WebsocketRails::BaseController
     CurrentGameSingleton.instance.status == :loading ?
         send_message(:my_event_server, {message: {status: "loading", data: CurrentGameSingleton.instance.champions}}) :
         send_message(:my_event_server, {message: {status: "running", data: {type: "game_state", data: CurrentGameSingleton.instance.game_state}}})
-
   end
 
   def delete_user
