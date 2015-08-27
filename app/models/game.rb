@@ -1,8 +1,8 @@
 class Game < ActiveRecord::Base
-  has_many :participants
-  belongs_to :blue_team, class_name: "Team"
-  belongs_to :red_team, class_name: "Team"
-  belongs_to :timeline
+  has_many :participants, dependent: :destroy
+  belongs_to :blue_team, class_name: "Team", dependent: :destroy
+  belongs_to :red_team, class_name: "Team", dependent: :destroy
+  belongs_to :timeline, dependent: :destroy
   enum matchMode: [:CLASSIC, :ODIN, :ARAM, :TUTORIAL, :ONEFORALL, :ASCENCION, :FIRSTBLOOD, :KINGPORO]
   enum matchType: [:CUSTOM_GAME, :MATCHED_GAME, :TUTORIAL_GAME]
   enum queueType: [:CUSTOM, :NORMAL_5x5_BLIND, :RANKED_SOLO_5x5, :RANKED_PREMADE_5x5, :BOT_5x5, :NORMAL_3x3, :RANKED_PREMADE_3x3, :NORMAL_5x5_DRAFT, :ODIN_5x5_BLIND,
@@ -14,6 +14,9 @@ class Game < ActiveRecord::Base
 
   #attr_accessible :matchId, :region, :platformId, :matchCreation, :matchDuration, :mapId, :matchVersion
 
+  def winning_team
+    blue_team.winner? ? blue_team : red_team
+  end
 
   def self.find_or_build_from_json json
     find_by_id(json['matchId']) || build_from_json(json)
@@ -25,11 +28,17 @@ class Game < ActiveRecord::Base
     p['id'] = game_id
     p['blue_team'] = Team.build_from_json(json['teams'].find{|k| k['teamId'] == 100}.merge({"game_id" => game_id}))
     p['red_team'] = Team.build_from_json(json['teams'].find{|k| k['teamId'] == 200}.merge({"game_id" => game_id}))
-    p['participants'] = Participant.build_from_array(json['participants']) if json['participants']
-    g = create(p)
-    g.timeline = Timeline.build_from_json(json['timeline'].merge({"game_id" => game_id}))
-    g.save
-    return g
+    ActiveRecord::Base.transaction do
+      @g = create(p)
+    end
+    ActiveRecord::Base.transaction do
+      @g.participants.append Participant.build_from_array(json['participants'], @g) if json['participants']
+    end
+    ActiveRecord::Base.transaction do
+      @g.timeline = Timeline.build_from_json(json['timeline'].merge({"game_id" => game_id}))
+      @g.save
+    end
+    return @g
   end
 
   def self.atomic_attributes
@@ -38,10 +47,14 @@ class Game < ActiveRecord::Base
 
   def get_next_msg msg
     next_frame = msg[:frame] ? msg[:event] ? msg[:frame] : timeline.frames.order(:timestamp).where("timestamp > #{msg[:frame].timestamp}").first : timeline.frames.order(:timestamp).first
-    next_event = msg[:event] ? msg[:frame].events.allowed_msg.order(:timestamp).where("timestamp > #{msg[:event].timestamp}").first : next_frame.events.order(:timestamp).first
+    next_event = msg[:event] ? msg[:frame].events.allowed_msg.order(:timestamp).where("timestamp > #{msg[:event].timestamp}").first : next_frame.events.order(:timestamp).first if next_frame
     {frame: next_frame, event: next_event}
   end
 
+  def to_hash
+    {blue_team: blue_team.to_hash,
+     red_team: red_team.to_hash}
+  end
 
   private_class_method :atomic_attributes, :build_from_json
 

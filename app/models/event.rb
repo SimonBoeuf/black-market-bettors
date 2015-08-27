@@ -28,7 +28,6 @@ class Event < ActiveRecord::Base
   end
 
   def self.build_from_json json, game_id
-    #participant
     p = json.select{|k, v| atomic_attributes.include? k}
     p['positionX'] = json['position']['x'] if json['position']
     p['positionY'] = json['position']['y'] if json['position']

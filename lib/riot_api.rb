@@ -4,11 +4,7 @@ class RiotApi
   end
 
   def self.format_response res
-    begin
-      JSON.parse(res.body)
-    rescue
-      raise Exception, "Response is not Json. <br/>Code : #{res.code} <br/>Headers : #{res.to_hash.inspect}<br/>Body : #{ap res.body}".html_safe
-    end
+    JSON.parse(res.body)
   end
 
   def self.get_api_response base_url, params = {}
@@ -20,8 +16,12 @@ class RiotApi
     req = Net::HTTP::Get.new(url.request_uri)
     http = Net::HTTP.new(url.host, url.port)
     http.use_ssl = (url.scheme == "https")
-    queue_api_request TIME_OFFSET
-    format_response(http.request(req))
+    loop do
+      ap "Trying again : #{@res.code}, #{@res.to_hash.inspect}" if @res
+      queue_api_request TIME_OFFSET
+      break if ((@res = http.request(req)).code == '200')
+    end
+    format_response(@res)
   end
 
   def self.get_static_data_api_response base_url, params = {}

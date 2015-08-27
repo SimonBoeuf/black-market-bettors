@@ -1,5 +1,5 @@
 class Timeline < ActiveRecord::Base
-  has_many :frames
+  has_many :frames, dependent: :destroy
   belongs_to :game
   #attr_accessible :frameInterval
 

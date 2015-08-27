@@ -3,6 +3,7 @@ class ParticipantFrame < ActiveRecord::Base
   belongs_to :frame
   #attr_accessible :totalGold, :level, :minionsKilled, :jungleMinionsKilled
 
+
   def self.build_from_array array, game_id
     res = []
     array.each do |json|

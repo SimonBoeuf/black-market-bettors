@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150823012840) do
+ActiveRecord::Schema.define(version: 20150826201742) do
 
   create_table "events", force: true do |t|
     t.integer  "frame_id"
@@ -102,7 +102,6 @@ ActiveRecord::Schema.define(version: 20150823012840) do
     t.integer  "champion_id"
     t.integer  "game_id"
     t.integer  "highestAchievedSeasonTier"
-    t.integer  "particpantId"
     t.integer  "spell1_id"
     t.integer  "spell2_id"
     t.integer  "team_id"
