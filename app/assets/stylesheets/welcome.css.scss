@@ -1,3 +1,79 @@
 // Place all the styles related to the Welcome controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+body {
+  margin: 0;
+  background: url(background.png) no-repeat;
+}
+
+#teamblue {
+  display: block;
+  width: 1578px;
+  height: 380px;
+  background-color: black;
+  margin: auto;
+  margin-top: 55px;
+  border-width: 4px;
+  border-color: #3399FF;
+  border-style: solid;
+  filter: alpha(opacity = 50);
+  -moz-opacity: .50;
+  opacity: .50;
+}
+
+#teamred {
+  display: block;
+  width: 1578px;
+  height: 380px;
+  background-color: black;
+  margin: auto;
+  margin-top: 70px;
+  border-width: 4px;
+  border-color: #CC0000;
+  border-style: solid;
+  filter: alpha(opacity = 50);
+  -moz-opacity: .50;
+  opacity: .50;
+}
+
+#loading {
+  position: relative;
+  font-weight: bold;
+  top: 60px;
+  margin: auto;
+  text-align: center;
+  font-size: 35px;
+  font-family: Verdana, Geneva, sans-serif;
+}
+
+#blue1, #blue2, #blue3, #blue4 {
+  display: block;
+  width: 20%;
+  height: 100%;
+  float: left;
+  background-color: black;
+  border-width: 4px;
+  border-style: solid;
+  border-color: #3399FF;
+  border-bottom: none;
+  border-top: none;
+  border-left: none;
+  margin: auto;
+  padding: 0;
+}
+
+#red1, #red2, #red3, #red4 {
+  display: block;
+  width: 20%;
+  height: 100%;
+  float: left;
+  background-color: black;
+  border-width: 4px;
+  border-style: solid;
+  border-color: #CC0000;
+  border-bottom: none;
+  border-top: none;
+  border-left: none;
+  margin: auto;
+  padding: 0;
+}

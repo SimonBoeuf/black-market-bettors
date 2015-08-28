@@ -1,0 +1,21 @@
+defaults: &defaults
+  api_key: "3681be3c-f4b4-4fc4-882d-98a3e7b9af37"
+  base_url: "api.pvp.net/api/lol"
+
+development:
+    <<: *defaults
+
+staging:
+    <<: *defaults
+
+test:
+    <<: *defaults
+
+devcenter:
+    <<: *defaults
+
+preprod:
+    <<: *defaults
+
+production:
+    <<: *defaults

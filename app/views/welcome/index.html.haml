@@ -1,12 +1,12 @@
-
-:javascript
-  $(document).ready(function() {
-    var dispatcher = new WebSocketRails("#{request.host_with_port}/websocket");
-    dispatcher.on_open = function (data) {
-        console.log('Connection has been established: ', data);
-        // You can trigger new server events inside this callback if you wish.
-    }
-    dispatcher.bind('my_event_server', function (data) {
-        console.log(data.message); // would output 'this is a message'
-    });
-  });
+%body
+    #teamblue
+        #blue1
+        #blue2
+        #blue3
+        #blue4
+    #loading VERSUS
+    #teamred
+        #red1
+        #red2
+        #red3
+        #red4
