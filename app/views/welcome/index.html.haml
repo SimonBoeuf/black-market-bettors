@@ -1,12 +1,35 @@
 %body
-    #teamblue
-        #blue1
-        #blue2
-        #blue3
-        #blue4
+  #loading_screen
+    .team#teamblue
+      .champion.blue_champion#blue0
+      .champion.blue_champion#blue1
+      .champion.blue_champion#blue2
+      .champion.blue_champion#blue3
+      .champion.blue_champion#blue4
     #loading VERSUS
-    #teamred
-        #red1
-        #red2
-        #red3
-        #red4
+    .team#teamred
+      .champion.red_champion#red0
+      .champion.red_champion#red1
+      .champion.red_champion#red2
+      .champion.red_champion#red3
+      .champion.red_champion#red4
+:javascript
+  $(document).ready(function() {
+    var dispatcher = new WebSocketRails("#{request.host_with_port}/websocket");
+    dispatcher.on_open = function (data) {
+        console.log('Connection has been established: ', data);
+        // You can trigger new server events inside this callback if you wish.
+    }
+    dispatcher.bind('loading_screen_msg', function (ws) {
+      $('#loading_screen').show();
+      $.each(ws.message.data, function(index, champion){
+        if (index < 5){
+          $("#blue"+index.toString()).append("<img src=\"" + get_loading_champion_image_url(champion.image) + "\"/>");
+        };
+      });
+    });
+  });
+
+  function get_loading_champion_image_url(img){
+    return "#{RiotApi::Static_Data.get_realm({region: 'euw'})['cdn']}/img/" + img.group + "/loading/" + img.full.slice(0, -4) + "_0.jpg"
+  };

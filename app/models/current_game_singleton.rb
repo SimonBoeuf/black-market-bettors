@@ -37,7 +37,7 @@ class CurrentGameSingleton
     @game_state = @game.to_hash
     @msg = @game.get_next_msg({frame: nil, msg: nil})
     @next_msg = @game.get_next_msg(@msg)
-    @status = :running
+    #@status = :running
     Thread.new do
       run_game
       ActiveRecord::Base.connection.close
@@ -77,7 +77,7 @@ class CurrentGameSingleton
   def get_champions_from_json json
     a = []
     json['participants'].each do |p|
-      a.append StaticData::Champion.find_or_build_by_id p['championId']
+      a.append JSON.parse(StaticData::Champion.find_or_build_by_id(p['championId']).to_json(include: :image))
     end
     return a
   end
@@ -173,6 +173,6 @@ class CurrentGameSingleton
   end
 
   def format_msg
-    {status: "running", type: @msg[:event] ? "event" : "frame", data: @msg[:event] ? @msg[:event].to_hash : @msg[:frame], wait: get_next_timestamp}
+    {status: "event", type: @msg[:event] ? "event" : "frame", data: @msg[:event] ? @msg[:event].to_hash : @msg[:frame], wait: get_next_timestamp}
   end
 end

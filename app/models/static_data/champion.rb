@@ -11,14 +11,14 @@ class StaticData::Champion < StaticData
     create(p)
   end
 
-  def self.get_splash_image img, name, skin_num, region
+  def self.get_splash_image_url img, name, skin_num, region
     res = RiotApi::Static_Data.get_realm({region: region})
     "#{res['cdn']}/img/#{img.group}/splash/#{name}_#{skin_num}.jpg"
   end
 
-  def self.get_loading_image img, name, skin_num, region
+  def self.get_loading_image_url img, region = 'euw', skin_num = 0
     res = RiotApi::Static_Data.get_realm({region: region})
-    "#{res['cdn']}/img/#{img.group}/loading/#{name}_#{skin_num}.jpg"
+    "#{res['cdn']}/img/#{img.group}/loading/#{img.full[0..-5]}_#{skin_num}.jpg"
   end
 
   def self.atomic_attributes
