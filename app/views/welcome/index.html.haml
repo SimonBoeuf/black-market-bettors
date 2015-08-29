@@ -57,6 +57,9 @@
       if (index < 5){
         $("#blue"+index.toString()).append("<img src=\"" + get_loading_champion_image_url(champion.image) + "\"/>");
       }
+      if (index >=5){
+        $("#red"+(index - 5).toString()).append("<img src=\"" + get_loading_champion_image_url(champion.image) + "\"/>");
+      }
     });
   };
 
