@@ -1,5 +1,5 @@
 %body
-  #loading_screen
+  #loading_screen.screen
     .team#teamblue
       .champion.blue_champion#blue0
       .champion.blue_champion#blue1
@@ -13,7 +13,7 @@
       .champion.red_champion#red2
       .champion.red_champion#red3
       .champion.red_champion#red4
-  #game
+  #game_screen.screen
     .side#blue
       .bet#blue_bet
         %button#blue_bet_button
@@ -23,6 +23,7 @@
           .team_summary_gold#blue_team_summary_gold
           .team_summary_drakes#blue_team_summary_drakes
           .team_summary_barons#blue_team_summary_barons
+          .team_summary_score#blue_team_summary_score
         .participants_summary#blue_team_participants_summary
           .participant_summary#participant_summary_1
             .participant_summary_champion#participant_summary_champion_1
@@ -93,6 +94,7 @@
           .team_summary_gold#red_team_summary_gold
           .team_summary_drakes#red_team_summary_drakes
           .team_summary_barons#bred_team_summary_barons
+          .team_summary_score#blue_team_summary_score
         .participants_summary#red_team_participants_summary
           .participant_summary#participant_summary_6
             .participant_summary_champion#participant_summary_champion_6
@@ -156,6 +158,8 @@
               .participant_summary_item#participant_summary_item_6_10
 
     #map
+  #winner_screen.screen
+    WINNER !
 :javascript
   $(document).ready(function() {
 
@@ -169,23 +173,23 @@
       switch(ws.status) {
         case "loading":
           // Loading scree infos
-          build_loading_screen(ws.data);
+          launch_loading_screen(ws.data);
           console.log("It's loading !");
           break;
         case "running":
           // Game state
-          $("#game").show();
-          run_game(ws.data);
+          launch_game_screen(ws.data);
           break;
         case "ended":
           // Winning team
+          launch_winner_screen(ws.data);
           console.log("Game has ended");
           break;
       };
     });
 
     dispatcher.bind('event_msg', function(ws) {
-      //update map
+      //process_event
     });
 
     var unloadEvent = window.attachEvent || window.addEventListener;
@@ -196,8 +200,9 @@
     });
   });
 
-  function build_loading_screen(data){
-    $('#loading_screen').fadeIn();
+  function launch_loading_screen(data){
+    $(".screen").hide();
+    $('#loading_screen').fadeIn(1000);
     $.each(data, function(index, champion){
       if (index < 5){
         $("#blue"+index.toString()).empty();
@@ -206,9 +211,25 @@
     });
   };
 
-  function run_game(data){
-    $('#loading_screen').fadeOut();
-    //Run game
+  function launch_game_screen(data){
+    $(".screen").hide();
+    $("#game_screen").fadeIn(1000);
+    build_game(data);
+  };
+
+  function launch_winner_screen(data){
+    $(".screen").hide();
+    $("#winning_screen").fadeIn(1000);
+  };
+
+  function build_game(data){
+    build_team("blue", data.blue_team);
+    build_team("red", data.red_team);
+  };
+
+  function build_team(side, data){
+    //build_team_summary(side, data);
+    //build_participants_summary(side, data);
   };
 
   function get_loading_champion_image_url(img){
