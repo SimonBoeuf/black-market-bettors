@@ -29,7 +29,7 @@
             .participant_summary_champion#participant_summary_champion_1
             .participant_summary_kda#participant_summary_kda_1
             .participant_summary_brawler#participant_summary_brawler_1
-            .participant_summary_brawler_update#participant_summary_brawler_update_1
+            .participant_summary_brawler_upgrade#participant_summary_brawler_upgrade_1
             .participant_summary_items#participant_summary_items_1
               .participant_summary_item#participant_summary_item_1_1
               .participant_summary_item#participant_summary_item_2_1
@@ -41,7 +41,7 @@
             .participant_summary_champion#participant_summary_champion_2
             .participant_summary_kda#participant_summary_kda_2
             .participant_summary_brawler#participant_summary_brawler_2
-            .participant_summary_brawler_update#participant_summary_brawler_update_2
+            .participant_summary_brawler_upgrade#participant_summary_brawler_upgrade_2
             .participant_summary_items#participant_summary_items_2
               .participant_summary_item#participant_summary_item_1_2
               .participant_summary_item#participant_summary_item_2_2
@@ -53,7 +53,7 @@
             .participant_summary_champion#participant_summary_champion_3
             .participant_summary_kda#participant_summary_kda_3
             .participant_summary_brawler#participant_summary_brawler_3
-            .participant_summary_brawler_update#participant_summary_brawler_update_3
+            .participant_summary_brawler_upgrade#participant_summary_brawler_upgrade_3
             .participant_summary_items#participant_summary_items_3
               .participant_summary_item#participant_summary_item_1_3
               .participant_summary_item#participant_summary_item_2_3
@@ -65,7 +65,7 @@
             .participant_summary_champion#participant_summary_champion_4
             .participant_summary_kda#participant_summary_kda_4
             .participant_summary_brawler#participant_summary_brawler_4
-            .participant_summary_brawler_update#participant_summary_brawler_update_4
+            .participant_summary_brawler_upgrade#participant_summary_brawler_upgrade_4
             .participant_summary_items#participant_summary_items_4
               .participant_summary_item#participant_summary_item_1_4
               .participant_summary_item#participant_summary_item_2_4
@@ -77,7 +77,7 @@
             .participant_summary_champion#participant_summary_champion_5
             .participant_summary_kda#participant_summary_kda_5
             .participant_summary_brawler#participant_summary_brawler_5
-            .participant_summary_brawler_update#participant_summary_brawler_update_5
+            .participant_summary_brawler_upgrade#participant_summary_brawler_upgrade_5
             .participant_summary_items#participant_summary_items_5
               .participant_summary_item#participant_summary_item_1_5
               .participant_summary_item#participant_summary_item_2_5
@@ -93,14 +93,14 @@
           .team_summary_towers#red_team_summary_towers
           .team_summary_gold#red_team_summary_gold
           .team_summary_drakes#red_team_summary_drakes
-          .team_summary_barons#bred_team_summary_barons
-          .team_summary_score#blue_team_summary_score
+          .team_summary_barons#red_team_summary_barons
+          .team_summary_score#red_team_summary_score
         .participants_summary#red_team_participants_summary
           .participant_summary#participant_summary_6
             .participant_summary_champion#participant_summary_champion_6
             .participant_summary_kda#participant_summary_kda_6
             .participant_summary_brawler#participant_summary_brawler_6
-            .participant_summary_brawler_update#participant_summary_brawler_update_6
+            .participant_summary_brawler_upgrade#participant_summary_brawler_upgrade_6
             .participant_summary_items#participant_summary_items_6
               .participant_summary_item#participant_summary_item_1_6
               .participant_summary_item#participant_summary_item_2_6
@@ -112,7 +112,7 @@
             .participant_summary_champion#participant_summary_champion_7
             .participant_summary_kda#participant_summary_kda_7
             .participant_summary_brawler#participant_summary_brawler_7
-            .participant_summary_brawler_update#participant_summary_brawler_update_7
+            .participant_summary_brawler_upgrade#participant_summary_brawler_upgrade_7
             .participant_summary_items#participant_summary_items_7
               .participant_summary_item#participant_summary_item_1_7
               .participant_summary_item#participant_summary_item_2_7
@@ -124,7 +124,7 @@
             .participant_summary_champion#participant_summary_champion_8
             .participant_summary_kda#participant_summary_kda_8
             .participant_summary_brawler#participant_summary_brawler_8
-            .participant_summary_brawler_update#participant_summary_brawler_update_8
+            .participant_summary_brawler_upgrade#participant_summary_brawler_upgrade_8
             .participant_summary_items#participant_summary_items_8
               .participant_summary_item#participant_summary_item_1_8
               .participant_summary_item#participant_summary_item_2_8
@@ -136,7 +136,7 @@
             .participant_summary_champion#participant_summary_champion_9
             .participant_summary_kda#participant_summary_kda_9
             .participant_summary_brawler#participant_summary_brawler_9
-            .participant_summary_brawler_update#participant_summary_brawler_update_9
+            .participant_summary_brawler_upgrade#participant_summary_brawler_upgrade_9
             .participant_summary_items#participant_summary_items_9
               .participant_summary_item#participant_summary_item_1_9
               .participant_summary_item#participant_summary_item_2_9
@@ -148,7 +148,7 @@
             .participant_summary_champion#participant_summary_champion_10
             .participant_summary_kda#participant_summary_kda_10
             .participant_summary_brawler#participant_summary_brawler_10
-            .participant_summary_brawler_update#participant_summary_brawler_update_10
+            .participant_summary_brawler_upgrade#participant_summary_brawler_upgrade_10
             .participant_summary_items#participant_summary_items_10
               .participant_summary_item#participant_summary_item_1_10
               .participant_summary_item#participant_summary_item_2_10
@@ -169,21 +169,19 @@
     };
 
     dispatcher.bind('status_msg', function(ws) {
-      console.log(ws);
       switch(ws.status) {
         case "loading":
           // Loading scree infos
           launch_loading_screen(ws.data);
-          console.log("It's loading !");
           break;
         case "running":
           // Game state
+          console.log(ws);
           launch_game_screen(ws.data);
           break;
         case "ended":
           // Winning team
           launch_winner_screen(ws.data);
-          console.log("Game has ended");
           break;
       };
     });
@@ -231,10 +229,55 @@
   };
 
   function build_team(side, data){
-    //build_team_summary(side, data);
-    //build_participants_summary(side, data);
+    build_team_summary(side, data);
+    build_participants_summary(data.participants);
+  };
+
+  function build_team_summary(side, data){
+    $("#"+side+"_team_summary_towers").text(data.tower_kills.toString());
+    $("#"+side+"_team_summary_gold").text(data.gold.toString());
+    $("#"+side+"_team_summary_drakes").text(data.drakes.toString());
+    $("#"+side+"_team_summary_barons").text(data.barons.toString());
+    $("#"+side+"_team_summary_score").text(data.total_kills.toString());
+  }
+
+  function build_participants_summary(data){
+    $.each(data, function(i, participant)
+    {
+      build_participant(participant)
+    });
+  };
+
+  function build_participant(participant)
+  {
+    get_sprite($("#participant_summary_champion_" + participant.participantId), participant.champion.image);
+    $("#participant_summary_kda_"+participant.participantId).text(participant.kills.toString() + " / " + participant.deaths.toString() + " / " + participant.assists.toString());
+    if (participant.brawler.type != null){get_sprite($("#participant_summary_brawler_" + participant.participantId), participant.brawler.type.image);};
+    if (participant.brawler.evolve != null){get_sprite($("#participant_summary_brawler_upgrade_" + participant.participantId), participant.brawler.evolve.image);};
+    build_participant_item_set($("#participant_summary_items_" + participant.participantId),participant.items);
+  };
+
+  function get_sprite(jquery_div, image)
+  {
+    jquery_div.attr("style",get_sprite_style(image));
+  };
+
+  function build_participant_item_set(jquery_div, item_set)
+  {
+    $.each(item_set, function(index, item){
+      $.each(jquery_div.children("div"), function(index, div){
+        if (typeof $(div).attr("style") === "undefined"){
+          get_sprite($(div), item.image);
+          return (false);
+        };
+      });
+    });
   };
 
   function get_loading_champion_image_url(img){
     return "#{RiotApi::Static_Data.get_realm({region: 'euw'})['cdn']}/img/" + img.group + "/loading/" + img.full.slice(0, -4) + "_0.jpg"
   };
+
+  function get_sprite_style(img){
+    return "width:" + img.w + "px;height:" + img.h + "px;background: url(#{StaticData.get_base_dragon_url("euw")}/img/sprite/" + img.sprite + "); background-repeat:no-repeat;background-position:-" + img.x + "px -" + img.y + "px;";
+  }

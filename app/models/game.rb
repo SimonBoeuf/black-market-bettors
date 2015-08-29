@@ -46,8 +46,8 @@ class Game < ActiveRecord::Base
   end
 
   def get_next_msg msg
-    next_frame = msg[:frame] ? msg[:event] ? msg[:frame] : timeline.frames.order(:timestamp).where("timestamp > #{msg[:frame].timestamp}").first : timeline.frames.order(:timestamp).first
-    next_event = msg[:event] ? msg[:frame].events.allowed_msg.order(:timestamp).where("timestamp > #{msg[:event].timestamp}").first : next_frame.events.order(:timestamp).first if next_frame
+    next_frame = msg[:frame] ? msg[:event] ? msg[:frame] : timeline.frames.order(:timestamp, :id).where("id > #{msg[:frame].id}").where("timestamp >= #{msg[:frame].timestamp}").first : timeline.frames.order(:timestamp).first
+    next_event = msg[:event] ? msg[:frame].events.allowed_msg.order(:timestamp, :id).where("id > #{msg[:event].id}").where("timestamp >= #{msg[:event].timestamp}").first : next_frame.events.order(:timestamp).first if next_frame
     {frame: next_frame, event: next_event}
   end
 
