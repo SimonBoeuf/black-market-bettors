@@ -104,10 +104,14 @@ class CurrentGameSingleton
           process_champion_kill(event) if event.killerId > 0
         when "ELITE_MONSTER_KILL"
           process_elite_monster_kill(event)
-        when "ITEM_DESTROYED" || "ITEM_SOLD" || "ITEM_UNDO"
-          process_item_remove(event) if !event.item.nil? #1501 not found
+        when "ITEM_DESTROYED"
+          process_item_remove(event) unless event.item.nil? #1501 not found
+        when "ITEM_SOLD"
+          process_item_remove(event) unless event.item.nil? #1501 not found
+        when "ITEM_UNDO"
+          process_item_remove(event) unless event.item.nil? #1501 not found
         when "ITEM_PURCHASED"
-          process_item_add(event) if !event.item.nil? #1501 not found
+          process_item_add(event) unless event.item.nil? #1501 not found
         when "SKILL_LEVEL_UP" && event.NORMAL?
           process_skill_level_up(event)
       end
@@ -148,9 +152,7 @@ class CurrentGameSingleton
   end
 
   def process_item_remove event
-    if !event.item.consumed?
-      get_participant(event.participant.participantId)[:items].delete_if{|item| item[:id] == event.item.id}
-    end
+    get_participant(event.participant.participantId)[:items].delete_at(get_participant(event.participant.participantId)[:items].map{|item| item["id"]}.index(event.item.id)) unless event.item.consumed?
   end
 
   def process_item_add event

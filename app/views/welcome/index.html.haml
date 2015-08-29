@@ -250,6 +250,8 @@
     build_participant_champion(participant);
     $("#participant_summary_kda_"+participant.participantId).text(participant.kills.toString() + " / " + participant.deaths.toString() + " / " + participant.assists.toString());
     build_participant_brawler(participant.brawler.type);
+    build_participant_brawler_upgrade(participant.brawler.evolve);
+    build_participant_item_set(participant.items);
   };
 
   function build_participant_champion(participant)
@@ -257,12 +259,17 @@
 
   };
 
-  function build_participant_brawler(participant)
+  function build_participant_brawler(jquery_div, brawler)
   {
 
   };
 
-    function build_participant_brawler_evolve(participant)
+  function build_participant_brawler_upgrade(jquery_div, brawler_upgrade)
+  {
+
+  };
+
+  function build_participant_item_set(jquery_div, item_set)
   {
 
   };
