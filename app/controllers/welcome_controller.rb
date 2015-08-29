@@ -10,7 +10,7 @@ class WelcomeController < ApplicationController
     @game_state = CurrentGameSingleton.instance.game_state
 
     respond_to do |format|
-      format.html
+      format.html { render layout: false}
       format.json { render json: @game_state }
     end
   end

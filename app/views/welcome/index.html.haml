@@ -19,16 +19,50 @@
     dispatcher.on_open = function (data) {
         console.log('Connection has been established: ', data);
         // You can trigger new server events inside this callback if you wish.
-    }
+    };
+
     dispatcher.bind('loading_screen_msg', function (ws) {
-      $('#loading_screen').show();
-      $.each(ws.message.data, function(index, champion){
-        if (index < 5){
-          $("#blue"+index.toString()).append("<img src=\"" + get_loading_champion_image_url(champion.image) + "\"/>");
-        };
-      });
+      show_loading_screen(ws.data);
+    });
+
+    dispatcher.bind('status_msg', function(ws) {
+      console.log(ws);
+      switch(ws.status) {
+        case "loading":
+          show_loading_screen(ws.data);
+          console.log("It's loading !");
+          break;
+        case "running":
+          run_game(ws.data);
+          break;
+        case "ended":
+          console.log("Game has ended");
+          break;
+      };
+    });
+
+    dispatcher.bind('event_msg', function(ws) {
+      //console.log(ws);
+    });
+
+    dispatcher.bind('game_state_msg', function(ws){
+      console.log(ws);
+      //update_map
     });
   });
+
+  function show_loading_screen(data){
+    $('#loading_screen').show();
+    $.each(data, function(index, champion){
+      if (index < 5){
+        $("#blue"+index.toString()).append("<img src=\"" + get_loading_champion_image_url(champion.image) + "\"/>");
+      }
+    });
+  };
+
+  function run_game(data){
+    $('#loading_screen').fadeOut();
+  };
 
   function get_loading_champion_image_url(img){
     return "#{RiotApi::Static_Data.get_realm({region: 'euw'})['cdn']}/img/" + img.group + "/loading/" + img.full.slice(0, -4) + "_0.jpg"

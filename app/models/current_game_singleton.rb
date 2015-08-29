@@ -4,7 +4,6 @@ class CurrentGameSingleton
   include Singleton
   include Observable
 
-
   def status
     @status
   end
@@ -17,40 +16,42 @@ class CurrentGameSingleton
     @game_state || {state: "No game running"}
   end
 
-  #private
+  private
 
   def initialize
-    @status = :loading
-    region = SAMPLE_MATCHES.to_a.sample.first
-    json = RiotApi::Match.get_by_id({region: region.downcase, id: SAMPLE_MATCHES[region].sample}, {includeTimeline: true})
-    @champions = get_champions_from_json json
-    changed
-    notify_observers({status: "loading", data: @champions})
     Thread.new do
-      load_game json
+      load_game
       ActiveRecord::Base.connection.close
     end
   end
 
-  def load_game json
+  def load_game
+    region = SAMPLE_MATCHES.to_a.sample.first
+    json = RiotApi::Match.get_by_id({region: region.downcase, id: SAMPLE_MATCHES[region].sample}, {includeTimeline: true})
+    @champions = get_champions_from_json json
+    change_status :loading
+    notify_observers({status: @status, data: @champions})
     @game = Game.find_or_build_from_json json
     @game_state = @game.to_hash
     @msg = @game.get_next_msg({frame: nil, msg: nil})
     @next_msg = @game.get_next_msg(@msg)
-    #@status = :running
+    change_status :running
+    notify_observers({status: @status, data: @game_state})
     Thread.new do
       run_game
       ActiveRecord::Base.connection.close
     end
   end
 
+
   def run_game
     while(@msg[:frame] != nil) do
       sleep(get_next_timestamp)
       launch_next_msg
     end
-    changed
-    notify_observers({status: "ended", type: "summary", data: @game.winning_team})
+    change_status :ended
+    notify_observers({status: @status, data: @game.winning_team})
+    sleep(10)
     initialize
   end
 
@@ -64,6 +65,11 @@ class CurrentGameSingleton
 
   def game
     @game
+  end
+
+  def change_status s
+    @status = s
+    changed
   end
 
   def msg
@@ -164,7 +170,7 @@ class CurrentGameSingleton
 
   def process_frame frame
     @game_state[:blue_team][:gold] = frame.total_gold(:blue_team)
-    @game_state[:blue_team][:gold] = frame.total_gold(:red_team)
+    @game_state[:red_team][:gold] = frame.total_gold(:red_team)
     #TODO : Check participants levels ?
   end
 
@@ -173,6 +179,6 @@ class CurrentGameSingleton
   end
 
   def format_msg
-    {status: "event", type: @msg[:event] ? "event" : "frame", data: @msg[:event] ? @msg[:event].to_hash : @msg[:frame], wait: get_next_timestamp}
+    {type: @msg[:event] ? "event" : "frame", data: @msg[:event] ? @msg[:event].to_hash : @msg[:frame], wait: get_next_timestamp}
   end
 end
