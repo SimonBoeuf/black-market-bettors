@@ -25,7 +25,8 @@ class Team < ActiveRecord::Base
               INNER_TURRET: {BOT_LANE: true, MID_LANE: true, TOP_LANE: true},
               OUTER_TURRET: {BOT_LANE: true, MID_LANE: true, TOP_LANE: true},
               NEXUS: {UPPER: true, LOWER: true}},
-    inhibs: {BOT_LANE: true, MID_LANE: true, TOP_LANE: true}
+    inhibs: {BOT_LANE: true, MID_LANE: true, TOP_LANE: true},
+    tower_kills: 0
     }
   end
 

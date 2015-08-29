@@ -93,8 +93,8 @@
           .team_summary_towers#red_team_summary_towers
           .team_summary_gold#red_team_summary_gold
           .team_summary_drakes#red_team_summary_drakes
-          .team_summary_barons#bred_team_summary_barons
-          .team_summary_score#blue_team_summary_score
+          .team_summary_barons#red_team_summary_barons
+          .team_summary_score#red_team_summary_score
         .participants_summary#red_team_participants_summary
           .participant_summary#participant_summary_6
             .participant_summary_champion#participant_summary_champion_6
@@ -169,12 +169,10 @@
     };
 
     dispatcher.bind('status_msg', function(ws) {
-      console.log(ws);
       switch(ws.status) {
         case "loading":
           // Loading scree infos
           launch_loading_screen(ws.data);
-          console.log("It's loading !");
           break;
         case "running":
           // Game state
@@ -183,7 +181,6 @@
         case "ended":
           // Winning team
           launch_winner_screen(ws.data);
-          console.log("Game has ended");
           break;
       };
     });
@@ -228,8 +225,28 @@
   };
 
   function build_team(side, data){
-    //build_team_summary(side, data);
-    //build_participants_summary(side, data);
+    build_team_summary(side, data);
+    build_participants_summary(data.participants);
+  };
+
+  function build_team_summary(side, data){
+    $("#"+side+"_team_summary_towers").text(data.tower_kills.toString());
+    $("#"+side+"_team_summary_gold").text(data.gold.toString());
+    $("#"+side+"_team_summary_drakes").text(data.drakes.toString());
+    $("#"+side+"_team_summary_barons").text(data.barons.toString());
+    $("#"+side+"_team_summary_score").text(data.total_kills.toString());
+  }
+
+  function build_participants_summary(data){
+    $.each(data, function(i, participant)
+    {
+      build_participant(participant)
+    });
+  };
+
+  function build_participant(participant)
+  {
+    console.log(participant);
   };
 
   function get_loading_champion_image_url(img){

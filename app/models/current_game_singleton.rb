@@ -118,6 +118,7 @@ class CurrentGameSingleton
 
   def process_building_kill event
     if event.TOWER_BUILDING?
+      @game_state[Team.get_color(event.teamId == 100 ? :red_team : :blue_team)][:tower_kills] += 1
       if event.NEXUS_TURRET?
         if event.positionX > event.positionY
           @game_state[Team.get_color(event.teamId)][:towers][:NEXUS][:LOWER] = false
