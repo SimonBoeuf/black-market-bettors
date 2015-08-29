@@ -152,7 +152,7 @@ class CurrentGameSingleton
   end
 
   def process_item_remove event
-    get_participant(event.participant.participantId)[:items].delete_at(get_participant(event.participant.participantId)[:items].map{|item| item["id"]}.index(event.item.id)) unless event.item.consumed?
+    get_participant(event.participant.participantId)[:items].delete_at(get_participant(event.participant.participantId)[:items].map{|item| item["id"]}.index(event.item.id)) unless event.item.consumed? || get_participant(event.participant.participantId)[:items].map{|item| item["id"]}.index(event.item.id).nil?
   end
 
   def process_item_add event

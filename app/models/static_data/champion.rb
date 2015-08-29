@@ -25,9 +25,5 @@ class StaticData::Champion < StaticData
     ["id", "name", "key", "title"]
   end
 
-  def get_sprite_style
-    "width:#{image.w}px;height:#{image.h}px;background: url(#{StaticData.get_sprite_image(image, "euw")}); background-repeat:no-repeat;background-position:-#{image.x}px -#{image.y}px;"
-  end
-
   private_class_method :atomic_attributes
 end

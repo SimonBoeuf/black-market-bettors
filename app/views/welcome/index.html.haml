@@ -176,6 +176,7 @@
           break;
         case "running":
           // Game state
+          console.log(ws);
           launch_game_screen(ws.data);
           break;
         case "ended":
@@ -236,7 +237,7 @@
     $("#"+side+"_team_summary_barons").text(data.barons.toString());
     $("#"+side+"_team_summary_score").text(data.total_kills.toString());
   }
-
+  
   function build_participants_summary(data){
     $.each(data, function(i, participant)
     {
@@ -247,28 +248,16 @@
   function build_participant(participant)
   {
     console.log(participant);
-    build_participant_champion(participant);
+    get_sprite($("#participant_summary_champion_" + participant.participantId), participant.champion.image);
     $("#participant_summary_kda_"+participant.participantId).text(participant.kills.toString() + " / " + participant.deaths.toString() + " / " + participant.assists.toString());
-    build_participant_brawler(participant.brawler.type);
-    build_participant_brawler_upgrade(participant.brawler.evolve);
+    if (participant.brawler.type != null){get_sprite($("#participant_summary_brawler_" + participant.participantId), participant.brawler.type.image);};
+    if (participant.brawler.evolve != null){get_sprite($("#participant_summary_brawler_upgrade_" + participant.participantId), participant.brawler.evolve.image);};
     build_participant_item_set(participant.items);
   };
 
-  function build_participant_champion(participant)
+  function get_sprite(jquery_div, image)
   {
-    $.get('/champion/sprite/' + participant.champion.id, function(data){
-      $("#participant_summary_champion_" + participant.participantId).attr("style",data);
-    });
-  };
-
-  function build_participant_brawler(jquery_div, brawler)
-  {
-
-  };
-
-  function build_participant_brawler_upgrade(jquery_div, brawler_upgrade)
-  {
-
+    jquery_div.attr("style",get_sprite_style(image));
   };
 
   function build_participant_item_set(jquery_div, item_set)
@@ -279,3 +268,7 @@
   function get_loading_champion_image_url(img){
     return "#{RiotApi::Static_Data.get_realm({region: 'euw'})['cdn']}/img/" + img.group + "/loading/" + img.full.slice(0, -4) + "_0.jpg"
   };
+
+  function get_sprite_style(img){
+    return "width:" + img.w + "px;height:" + img.h + "px;background: url(#{StaticData.get_base_dragon_url("euw")}/img/sprite/" + img.sprite + "); background-repeat:no-repeat;background-position:-" + img.x + "px -" + img.y + "px;";
+  }
