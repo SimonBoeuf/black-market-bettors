@@ -15,21 +15,21 @@
       .champion.red_champion#red4
 :javascript
   $(document).ready(function() {
+
     var dispatcher = new WebSocketRails("#{request.host_with_port}/websocket");
     dispatcher.on_open = function (data) {
         console.log('Connection has been established: ', data);
-        // You can trigger new server events inside this callback if you wish.
     };
 
     dispatcher.bind('loading_screen_msg', function (ws) {
-      show_loading_screen(ws.data);
+      build_loading_screen(ws.data);
     });
 
     dispatcher.bind('status_msg', function(ws) {
       console.log(ws);
       switch(ws.status) {
         case "loading":
-          show_loading_screen(ws.data);
+          build_loading_screen(ws.data);
           console.log("It's loading !");
           break;
         case "running":
@@ -49,12 +49,20 @@
       console.log(ws);
       //update_map
     });
+
+    var unloadEvent = window.attachEvent || window.addEventListener;
+    var chkevent = window.attachEvent ? 'onbeforeunload' : 'beforeunload';
+
+    unloadEvent(chkevent, function(e) {
+      dispatcher.disconnect();
+    });
   });
 
-  function show_loading_screen(data){
-    $('#loading_screen').show();
+  function build_loading_screen(data){
+    $('#loading_screen').fadeIn();
     $.each(data, function(index, champion){
       if (index < 5){
+        $("#blue"+index.toString()).empty();
         $("#blue"+index.toString()).append("<img src=\"" + get_loading_champion_image_url(champion.image) + "\"/>");
       }
     });
