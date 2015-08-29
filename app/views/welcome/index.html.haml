@@ -237,7 +237,7 @@
     $("#"+side+"_team_summary_barons").text(data.barons.toString());
     $("#"+side+"_team_summary_score").text(data.total_kills.toString());
   }
-  
+
   function build_participants_summary(data){
     $.each(data, function(i, participant)
     {
@@ -247,12 +247,11 @@
 
   function build_participant(participant)
   {
-    console.log(participant);
     get_sprite($("#participant_summary_champion_" + participant.participantId), participant.champion.image);
     $("#participant_summary_kda_"+participant.participantId).text(participant.kills.toString() + " / " + participant.deaths.toString() + " / " + participant.assists.toString());
     if (participant.brawler.type != null){get_sprite($("#participant_summary_brawler_" + participant.participantId), participant.brawler.type.image);};
     if (participant.brawler.evolve != null){get_sprite($("#participant_summary_brawler_upgrade_" + participant.participantId), participant.brawler.evolve.image);};
-    build_participant_item_set(participant.items);
+    build_participant_item_set($("#participant_summary_items_" + participant.participantId),participant.items);
   };
 
   function get_sprite(jquery_div, image)
@@ -262,7 +261,14 @@
 
   function build_participant_item_set(jquery_div, item_set)
   {
-
+    $.each(item_set, function(index, item){
+      $.each(jquery_div.children("div"), function(index, div){
+        if (typeof $(div).attr("style") === "undefined"){
+          get_sprite($(div), item.image);
+          return (false);
+        };
+      });
+    });
   };
 
   function get_loading_champion_image_url(img){
