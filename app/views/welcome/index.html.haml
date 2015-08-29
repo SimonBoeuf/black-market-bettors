@@ -256,7 +256,9 @@
 
   function build_participant_champion(participant)
   {
-
+    $.get('/champion/sprite/' + participant.champion.id, function(data){
+      $("#participant_summary_champion_" + participant.participantId).attr("style",data);
+    });
   };
 
   function build_participant_brawler(jquery_div, brawler)

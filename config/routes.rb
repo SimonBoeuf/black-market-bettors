@@ -17,6 +17,7 @@ RiotApiChallenge::Application.routes.draw do
   root 'welcome#index'
 
   get 'game_state' => 'welcome#game_state'
+  get 'champion/sprite/:id' => 'static_data#champion_sprite'
 
   # Example resource route with options:
   #   resources :products do

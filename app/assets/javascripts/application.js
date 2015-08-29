@@ -17,4 +17,3 @@
 //= require websocket_rails/main
 $(document).ready(function(){
 });
-
