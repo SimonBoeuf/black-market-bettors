@@ -253,7 +253,7 @@
   {
     get_sprite($("#participant_summary_champion_" + participant.participantId), participant.champion.image);
     $("#participant_summary_level_" + participant.participantId).html(participant.level.toString() == 0 ? "1&nbsp;" : participant.level.toString());
-    $("#participant_summary_kda_"+participant.participantId).html("<span class=\"kills\">" + participant.kills.toString() + "Kda : </span> / " + "<span class=\"deaths\">" + participant.deaths.toString() + "</span> / <span class=\"assists\">" + participant.assists.toString() + "</span>");
+    $("#participant_summary_kda_"+participant.participantId).html("Kda : <span class=\"kills\">" + participant.kills.toString() + "</span> / " + "<span class=\"deaths\">" + participant.deaths.toString() + "</span> / <span class=\"assists\">" + participant.assists.toString() + "</span>");
     if (participant.brawler.type != null){get_sprite($("#participant_summary_brawler_" + participant.participantId), participant.brawler.type.image);};
     if (participant.brawler.evolve != null){get_sprite($("#participant_summary_brawler_upgrade_" + participant.participantId), participant.brawler.evolve.image);};
     build_participant_item_set($("#participant_summary_items_" + participant.participantId),participant.items, participants_items[participant.participantId]);
