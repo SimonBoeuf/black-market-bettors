@@ -45,7 +45,6 @@ class CurrentGameSingleton
 
 
   def run_game
-    sleep(30);
     while(@msg[:frame] != nil) do
       sleep(get_next_timestamp)
       launch_next_msg
@@ -61,7 +60,7 @@ class CurrentGameSingleton
     @next_msg = @game.get_next_msg(@msg)
     process_event
     changed
-    notify_observers(format_msg)
+    notify_observers(format_msg) unless skip_msg
   end
 
   def game
@@ -191,5 +190,13 @@ class CurrentGameSingleton
              @msg[:frame] ? [@msg[:frame].as_json, {blue_team_gold: @msg[:frame].total_gold(:blue_team)}, {red_team_gold: @msg[:frame].total_gold(:red_team)}].inject(&:merge) : nil
            end,
      wait: get_next_timestamp}
+  end
+
+  def skip_msg
+    event = @msg[:event]
+    (@msg[:frame].nil? && @msg[:event].nil?) ||
+        (event &&
+            (event.ITEM_DESTROYED? || event.ITEM_SOLD? || event.ITEM_UNDO? || event.ITEM_PURCHASED?) &&
+            (!event.item || (!event.item.is_brawler? && !event.item.is_brawler_upgrade? && (event.item.consumed? || event.item.group == 'RelicBase'))))
   end
 end
