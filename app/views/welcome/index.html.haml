@@ -15,9 +15,7 @@
       .champion.red_champion#red4
   #game_screen.screen
     .side#blue
-      .bet#blue_bet
-        %button#blue_bet_button
-      .team#blue_team
+      .team_side#blue_team
         .team_summary#blue_team_summary
           .team_summary_towers#blue_team_summary_towers
           .team_summary_gold#blue_team_summary_gold
@@ -86,9 +84,7 @@
               .participant_summary_item#participant_summary_item_5_5
               .participant_summary_item#participant_summary_item_6_5
     .side#red
-      .bet#red_bet
-        %button#red_bet_button
-      .team#red_team
+      .team_side#red_team
         .team_summary#red_team_summary
           .team_summary_towers#red_team_summary_towers
           .team_summary_gold#red_team_summary_gold
@@ -205,9 +201,6 @@
       if (index < 5){
         $("#blue"+index.toString()).empty();
         $("#blue"+index.toString()).append("<img src=\"" + get_loading_champion_image_url(champion.image) + "\"/>");
-      }
-      if (index >=5){
-        $("#red"+(index - 5).toString()).append("<img src=\"" + get_loading_champion_image_url(champion.image) + "\"/>");
       }
     });
   };
