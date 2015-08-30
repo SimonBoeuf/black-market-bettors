@@ -11,7 +11,7 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-  background: url(background.png) no-repeat;
+  background: image-url("background.png") no-repeat;
   font-family: Verdana, Geneva, sans-serif;
 }
 
@@ -98,7 +98,7 @@ body {
 #blue_team_summary{
   border-color: #006699;
   border-right: none;
-  background: url("minimap.png") no-repeat right;
+  background: image-url("minimap.png") no-repeat right;
   background-color: black;
 }
 
