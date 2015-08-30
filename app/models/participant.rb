@@ -35,10 +35,10 @@ class Participant < ActiveRecord::Base
 
   def to_hash
     {participantId: participantId,
-    champion: JSON.parse(champion.to_json(include: :image)),
+    champion: champion.as_json(include: :image),
     hierAchievedSeasonTier: highestAchievedSeasonTier,
-    spell1: JSON.parse(spell1.to_json(include: :image)),
-    spell2: JSON.parse(spell2.to_json(include: :image)),
+    spell1: spell1.as_json(include: :image),
+    spell2: spell2.as_json(include: :image),
     level: 0,
     kills: 0,
     deaths: 0,

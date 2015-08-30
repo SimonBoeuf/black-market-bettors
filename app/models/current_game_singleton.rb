@@ -83,7 +83,7 @@ class CurrentGameSingleton
   def get_champions_from_json json
     a = []
     json['participants'].each do |p|
-      a.append JSON.parse(StaticData::Champion.find_or_build_by_id(p['championId']).to_json(include: :image))
+      a.append StaticData::Champion.find_or_build_by_id(p['championId']).as_json(include: :image)
     end
     return a
   end
@@ -112,8 +112,8 @@ class CurrentGameSingleton
           process_item_remove(event) unless event.item.nil? #1501 not found
         when "ITEM_PURCHASED"
           process_item_add(event) unless event.item.nil? #1501 not found
-        when "SKILL_LEVEL_UP" && event.NORMAL?
-          process_skill_level_up(event)
+        when "SKILL_LEVEL_UP"
+          process_skill_level_up(event) if event.NORMAL?
       end
     else
       process_frame @msg[:frame] if @msg[:frame]
@@ -157,18 +157,18 @@ class CurrentGameSingleton
 
   def process_item_add event
     if event.item.is_brawler?
-      get_participant(event.participant.participantId)[:brawler][:type] = JSON.parse(StaticData::Item.find_or_build_by_id(event.item.id).to_json(include: :image))
+      get_participant(event.participant.participantId)[:brawler][:type] = StaticData::Item.find_or_build_by_id(event.item.id).as_json(include: :image)
     elsif event.item.is_brawler_upgrade?
-      get_participant(event.participant.participantId)[:brawler][:evolve] = JSON.parse(StaticData::Item.find_or_build_by_id(event.item.id).to_json(include: :image))
+      get_participant(event.participant.participantId)[:brawler][:evolve] = StaticData::Item.find_or_build_by_id(event.item.id).as_json(include: :image)
     elsif event.item.group == 'RelicBase'
-      get_participant(event.participant.participantId)[:trinket] = JSON.parse(StaticData::Item.find_or_build_by_id(event.item.id).to_json(include: :image))
+      get_participant(event.participant.participantId)[:trinket] = StaticData::Item.find_or_build_by_id(event.item.id).as_json(include: :image)
     elsif !event.item.consumed?
-      get_participant(event.participant.participantId)[:items].append(JSON.parse(StaticData::Item.find_or_build_by_id(event.item.id).to_json(include: :image)))
+      get_participant(event.participant.participantId)[:items].append(StaticData::Item.find_or_build_by_id(event.item.id).as_json(include: :image))
     end
   end
 
   def process_skill_level_up event
-    get_participant(event.participant.id)[:level] += 1
+    get_participant(event.participant.participantId)[:level] += 1
   end
 
   def process_frame frame
@@ -182,6 +182,10 @@ class CurrentGameSingleton
   end
 
   def format_msg
-    {type: @msg[:event] ? "event" : "frame", data: @msg[:event] ? @msg[:event].to_hash : @msg[:frame], wait: get_next_timestamp}
+    {type: @msg[:event] ? "event" : "frame",
+     data: @msg[:event] ?
+         @msg[:event].to_hash :
+         [@msg[:frame].as_json, {blue_team_gold: @msg[:frame].total_gold(:blue_team)},{red_team_gold: @msg[:frame].total_gold(:red_team)}].inject(&:merge),
+     wait: get_next_timestamp}
   end
 end
