@@ -16,7 +16,7 @@ class CurrentGameSingleton
     @game_state || {state: "No game running"}
   end
 
-  private
+  #private
 
   def initialize
     Thread.new do
@@ -45,6 +45,7 @@ class CurrentGameSingleton
 
 
   def run_game
+    sleep(30);
     while(@msg[:frame] != nil) do
       sleep(get_next_timestamp)
       launch_next_msg
@@ -120,9 +121,10 @@ class CurrentGameSingleton
     end
   end
 
+
   def process_building_kill event
     if event.TOWER_BUILDING?
-      @game_state[Team.get_color(event.teamId == 100 ? :red_team : :blue_team)][:tower_kills] += 1
+      @game_state[Team.get_color(event.teamId == 100 ? 200 : 100)][:tower_kills] += 1
       if event.NEXUS_TURRET?
         if event.positionX > event.positionY
           @game_state[Team.get_color(event.teamId)][:towers][:NEXUS][:LOWER] = false
@@ -183,9 +185,11 @@ class CurrentGameSingleton
 
   def format_msg
     {type: @msg[:event] ? "event" : "frame",
-     data: @msg[:event] ?
-         @msg[:event].to_hash :
-         [@msg[:frame].as_json, {blue_team_gold: @msg[:frame].total_gold(:blue_team)},{red_team_gold: @msg[:frame].total_gold(:red_team)}].inject(&:merge),
+     data: if @msg[:event] then
+             @msg[:event].to_hash
+           else
+             @msg[:frame] ? [@msg[:frame].as_json, {blue_team_gold: @msg[:frame].total_gold(:blue_team)}, {red_team_gold: @msg[:frame].total_gold(:red_team)}].inject(&:merge) : nil
+           end,
      wait: get_next_timestamp}
   end
 end

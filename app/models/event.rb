@@ -75,7 +75,8 @@ class Event < ActiveRecord::Base
     teamId: teamId,
     timestamp: timestamp,
     victimId: victimId,
-    item: item ? item.as_json(include: :image) : nil}
+    item: item ? item.as_json(include: :image) : nil,
+    assisting_participants: assisting_participants.as_json}
   end
 
   private_class_method :atomic_attributes

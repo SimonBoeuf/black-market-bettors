@@ -253,8 +253,8 @@
   function build_participant(participant)
   {
     get_sprite($("#participant_summary_champion_" + participant.participantId), participant.champion.image);
-    $("#participant_summary_level_" + participant.participantId).text(participant.level.toString());
-    $("#participant_summary_kda_"+participant.participantId).text(participant.kills.toString() + " / " + participant.deaths.toString() + " / " + participant.assists.toString());
+    $("#participant_summary_level_" + participant.participantId).html(participant.level.toString() == 0 ? "1&nbsp;" : participant.level.toString());
+    $("#participant_summary_kda_"+participant.participantId).html("<span class=\"kills\">" + participant.kills.toString() + "</span> / " + "<span class=\"deaths\">" + participant.deaths.toString() + "</span> / <span class=\"assists\">" + participant.assists.toString() + "</span>");
     if (participant.brawler.type != null){get_sprite($("#participant_summary_brawler_" + participant.participantId), participant.brawler.type.image);};
     if (participant.brawler.evolve != null){get_sprite($("#participant_summary_brawler_upgrade_" + participant.participantId), participant.brawler.evolve.image);};
     build_participant_item_set($("#participant_summary_items_" + participant.participantId),participant.items);
@@ -288,13 +288,13 @@
   function process_event(data) {
     switch(data.eventType){
       case "BUILDING_KILL" :
-        //process_building_kill(data);
+        process_building_kill(data);
         break;
       case "CHAMPION_KILL" :
-        //process_champion_kill(data);
+        process_champion_kill(data);
         break;
       case "ELITE_MONSTER_KILL" :
-        //process_elite_monster_kill(data);
+        process_elite_monster_kill(data);
         break;
       case "ITEM_DESTROYED" :
         //process_item_remove(data);
@@ -309,12 +309,66 @@
         //process_item_add(data);
         break;
       case "SKILL_LEVEL_UP" :
-        //process_skill_level_up(data);
+        process_skill_level_up(data);
         break;
     };
   };
-  function process_frame(data){
-    $("#blue_team_summary_gold").text(data.blue_team_gold);
-    $("#red_team_summary_gold").text(data.red_team_gold);
-    console.log(data);
+
+  function process_frame(frame){
+    if (frame)
+    {
+      $("#blue_team_summary_gold").text(frame.blue_team_gold);
+      $("#red_team_summary_gold").text(frame.red_team_gold);
+    }
   };
+
+  function process_building_kill(event){
+    if (event.buildingType == "TOWER_BUILDING")
+      process_tower_kill(event);
+    if (event.buildingType == "INHIBITOR_BUILDING")
+      process_inhibitor_kill(event);
+  };
+
+  function process_inhibitor_kill(event){
+    console.log("Inhib killed");
+    //TODO: minimap animation
+  };
+
+  function process_tower_kill(event){
+    event.teamId == 200 ? $("#blue_team_summary_towers").text(1 + parseInt($("#blue_team_summary_towers").text())) : $("#red_team_summary_towers").text(1 + parseInt($("#red_team_summary_towers").text()));
+    //TODO : minimap animation
+  };
+
+  function process_champion_kill(event){
+    $("#participant_summary_kda_" + event.killerId).find("span.kills").text(parseInt($("#participant_summary_kda_" + event.killerId).find("span.kills").text()) + 1);
+    $("#participant_summary_kda_" + event.victimId).find("span.deaths").text(parseInt($("#participant_summary_kda_" + event.victimId).find("span.deaths").text()) + 1);
+    $.each(event.assisting_participants, function(i, p){
+      $("#participant_summary_kda_" + p.participantId).find("span.assists").text(parseInt($("#participant_summary_kda_" + p.participantId).find("span.assists").text()) + 1);
+    });
+    $("#" + team_side(event.killerId) + "_team_summary_score").text(parseInt($("#" + team_side(event.killerId) + "_team_summary_score").text()) + 1)
+    //TODO : animation minimap + transition div
+  };
+
+  function process_elite_monster_kill(event){
+    if (event.monsterType == "DRAGON")
+      $("#" + team_side(event.killerId) + "_team_summary_drakes").text(parseInt($("#" + team_side(event.killerId) + "_team_summary_drakes").text()) + 1)
+    else
+      $("#" + team_side(event.killerId) + "_team_summary_barons").text(parseInt($("#" + team_side(event.killerId) + "_team_summary_barons").text()) + 1)
+    console.log(event);
+  };
+
+  function  process_skill_level_up(event){
+    div = $("#participant_summary_level_" + event.participant.participantId)
+    if (div.html() == "1&nbsp;"){
+      div.text("1");
+    }
+    else{
+      div.text(parseInt(div.text()) + 1);
+    }
+
+  };
+
+  function team_side(participantId){
+    return (participantId < 6 ? "blue" : "red");
+  };
+
