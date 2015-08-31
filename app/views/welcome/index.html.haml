@@ -336,10 +336,14 @@
           %button#red_bet_button
             Bet on red !
     #map
-  #winner_screen.screen
+  #winning_screen.screen
+    %img#victory_screen{src: image_path("victory.png")}
+      .victory_score
+        BLUE TEAM WIN !!! SCORE : 990/1000
 :javascript
   var participants_items = [[],[],[],[],[],[],[],[],[],[],[]];
   $(document).ready(function() {
+    launch_winner_screen("osefdeca");
 
     var dispatcher = new WebSocketRails("#{request.host_with_port}/websocket");
     dispatcher.on_open = function (data) {
@@ -350,11 +354,11 @@
       switch(ws.status) {
         case "loading":
           // Loading scree infos
-          launch_loading_screen(ws.data);
+          //launch_loading_screen(ws.data);
           break;
         case "running":
           // Game state
-          launch_game_screen(ws.data);
+          //launch_game_screen(ws.data);
           break;
         case "ended":
           // Winning team

@@ -211,6 +211,25 @@ table#red_participants{
   font-style: oblique;
 }
 
-#winner_screen{
-  background:image_url("victory.png") no-repeat;
+.blue_bets{
+  margin-left: 45%;
+}
+
+#victory_screen{
+  width: 50%;
+  height: 700px;
+  float: left;
+  margin-left: 25%;
+}
+
+.victory_score{
+  width: 500px;
+  height: 200px;
+  text-align: center;
+  font-size: 50px;
+  position: relative;
+  left: 680px;
+  margin: 0;
+  color: #3399FF;
+  font-weight: bold;
 }
