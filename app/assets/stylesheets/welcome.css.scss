@@ -15,6 +15,23 @@ body {
   font-family: Verdana, Geneva, sans-serif;
 }
 
+table#blue_participants{
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+table#red_participants{
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -moz-border-radius-topright: 5px;
+  -moz-border-radius-bottomright: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
 #loading_screen, #game_screen, #winner_screen{
   display: none;
 }
@@ -64,8 +81,9 @@ body {
 }
 
 .side{
-  width: 50%;
-  height: 100%;
+  width: 49%;
+  margin: 0 auto;
+  height: 600px;
   display: block;
   float: left;
 }
@@ -151,9 +169,21 @@ body {
 
 #red_team{
   background-color: rgba(204, 00, 00, 0.4);
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -moz-border-radius-topright: 5px;
+  -moz-border-radius-bottomright: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 
 #blue_team{
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
   background-color: rgba(101, 156, 239, 0.4);
 }
 
