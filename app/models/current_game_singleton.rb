@@ -30,11 +30,13 @@ class CurrentGameSingleton
   end
 
   def bettor_score bettor
-    score = @bettors.select{|b| b[:id] == bettor}.first[:bets].select{|bet| bet[:team] == @game.winning_team.team_id}.sum{|bet| bet[:end_time].to_f - bet[:start_time].to_f} / @game.matchDuration * 100 * GAME_SPEED
-    score > 100 ? 100 : score
+    if @bettors.select{|b| b[:id] == bettor}.first
+      score = @bettors.select{|b| b[:id] == bettor}.first[:bets].select{|bet| bet[:team] == @game.winning_team.team_id}.sum{|bet| bet[:end_time].to_f - bet[:start_time].to_f} / @game.matchDuration * 1000 * GAME_SPEED
+      score > 100 ? 100 : score
+    end
   end
 
-  private
+  #private
 
   def initialize
     @bettors = []
@@ -181,7 +183,7 @@ class CurrentGameSingleton
   end
 
   def process_item_remove event
-    get_participant(event.participant.participantId)[:items].delete_at(get_participant(event.participant.participantId)[:items].map{|item| item["id"]}.index(event.item.id)) unless event.item.consumed? || get_participant(event.participant.participantId)[:items].map{|item| item["id"]}.index(event.item.id).nil?
+    get_participant(event.participant.participantId)[:items].delete_at(get_participant(event.participant.participantId)[:items].map{|item| item["id"]}.index(event.item.id)) unless event.participant.nil? || event.item.nil? || event.item.consumed? || get_participant(event.participant.participantId)[:items].map{|item| item["id"]}.index(event.item.id).nil?
   end
 
   def process_item_add event
