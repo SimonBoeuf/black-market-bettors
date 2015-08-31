@@ -308,10 +308,12 @@
       switch(ws.status) {
         case "loading":
           // Loading scree infos
+          console.log("loading");
           launch_loading_screen(ws.data);
           break;
         case "running":
           // Game state
+          console.log("running");
           launch_game_screen(ws.data);
           break;
         case "ended":

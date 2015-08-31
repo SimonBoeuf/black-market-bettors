@@ -220,3 +220,8 @@ body {
   background-position: 15% 10%;
   background-color: white;
 }
+
+@keyframes bounce{
+  from {font-size: 16px;}
+  to   {font-size: 20px;}
+}

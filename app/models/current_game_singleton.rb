@@ -16,6 +16,19 @@ class CurrentGameSingleton
     @game_state || {state: "No game running"}
   end
 
+  def add_bettor bettor
+    @bettors.append({id: bettor, bets: []})
+  end
+
+  def place_bet bettor, team
+    @bettors.select{|b| b[:id] == bettor}.first[:bets].select{|bet| bet[:end_time] == -1}.first[:end_time] = Time.now unless @bettors.select{|b| b[:id] == bettor}.first[:bets].empty?
+    @bettors.select{|b| b[:id] == bettor}.first[:bets].append({team: team, start_time: Time.now, end_time: -1})
+  end
+
+  def bettor_score bettor, winning_team
+    @bettors.select{|b| b[:id] == bettor}.first[:bets].select{|bet| bet[:team] == winning_team}.sum{|bet| bet[:end_time].to_i - bet[:start_time].to_i}
+  end
+
   #private
 
   def initialize
@@ -26,6 +39,7 @@ class CurrentGameSingleton
   end
 
   def load_game
+    @bettors = []
     region = SAMPLE_MATCHES.to_a.sample.first
     json = RiotApi::Match.get_by_id({region: region.downcase, id: SAMPLE_MATCHES[region].sample}, {includeTimeline: true})
     @champions = get_champions_from_json json
@@ -50,6 +64,7 @@ class CurrentGameSingleton
       launch_next_msg
     end
     change_status :ended
+    end_bets
     notify_observers({status: @status, data: @game.winning_team})
     sleep(10)
     initialize
@@ -198,5 +213,13 @@ class CurrentGameSingleton
         (event &&
             (event.ITEM_DESTROYED? || event.ITEM_SOLD? || event.ITEM_UNDO? || event.ITEM_PURCHASED?) &&
             (!event.item || (!event.item.is_brawler? && !event.item.is_brawler_upgrade? && (event.item.consumed? || event.item.group == 'RelicBase'))))
+  end
+
+  def end_bets
+    @bettors.each do |bettor|
+      bettor[:bets].select{|bet| bet[:end_time] == -1}.each do |current|
+        current[:end_time] = Time.now
+      end
+    end
   end
 end

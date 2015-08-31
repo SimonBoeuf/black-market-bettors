@@ -10,10 +10,16 @@ class TimelineMessagesController < WebsocketRails::BaseController
 
   def client_connected
     g = CurrentGameSingleton.instance
+    #CurrentGameSingleton.instance.add_bettor(@_event.data[:connection_id])
     g.add_observer(self)
     send_message(:status_msg, {status: "loading", data: CurrentGameSingleton.instance.champions}) if g.status == :loading
     send_message(:status_msg, {status: "running", data: CurrentGameSingleton.instance.game_state}) if g.status == :running
   end
+
+  def place_bet
+
+  end
+
 
   def delete_user
 
