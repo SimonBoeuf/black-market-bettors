@@ -4,8 +4,8 @@ Category: Black Market Brawlers
 
 ## Introduction
 Black Market Bettors is a small game that will challenge your analysis capabilities :
-- The server is permanently running replays-like of black market bettor games. Your aim is to guess which team will win : When you connect to the server, you will be able to place bets as soon as a game is running
-- Throughout the game, you will see gold/objectives/players stuffs/brawlers/... If you think you chose the wrong team, change it ! Your final score will be calculated depending on the time spent with your bet placed on the right team.
+- The server is permanently running replays-like of black market brawlers games. Your aim is to guess which team will win : When you connect to the server, you will be able to guess which team will win as soon as a game is running
+- Throughout the game, you will see the evolution of gold/objectives/players stuffs/brawlers/... per team. If you think you chose the wrong team, change it ! Your final score will be calculated depending on the time spent with your bet placed on the right team.
 - When the game is over, you will see a screen displaying the winning team as well as your final score, which is : time spent on the winning team / game duration * 1000 (x1000 a score is always prettier)
 - Wait 10 seconds, and another game will be loaded. Have fun !
 
@@ -25,14 +25,15 @@ Black Market Bettors is a small game that will challenge your analysis capabilit
 ### Configuration and launch
 - Rename the file config/riot_api.yml.sample to config/riot_api.yml and place your api_key in it
 - You can set the game speed in config/initializers/game.rb (default: 10, which means game will last ten times shorter than it actually did)
-- run : 
-`
-rake db:create
-rake db:migrate
-rails s
-`
-### Notes
-- It might take a while to load games the first few times you launch the server. Don't worry, it will get better.
+- Build a valid [database.yml](https://gist.github.com/erichurst/961978). file, which you will place in config/ folder as well
+- run
+    rake db:create
+    rake db:migrate
+    rails s
+
+### Note
+- It might take a while to load games the first few times you launch the server, because you will have to request api for every single static data. Don't worry, it will get better.
+
 ## Legal
 
-"black market bettors" isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing League of Legends. League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc. League of Legends © Riot Games, Inc.
+- "black market bettors" isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing League of Legends. League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc. League of Legends © Riot Games, Inc.
