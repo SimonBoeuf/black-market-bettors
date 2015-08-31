@@ -21,7 +21,7 @@ class CurrentGameSingleton
   end
 
   def remove_bettor bettor
-    @bettors.delete_if{|b| b.id == bettor}
+    @bettors.delete_if{|b| b[:id] == bettor}
   end
 
   def place_bet bettor, team
