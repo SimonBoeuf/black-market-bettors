@@ -126,6 +126,14 @@ body {
   font-weight: bold;
 }
 
+.line2{
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  font-weight: bold;
+  color: white;
+}
+
 .participant_summary_brawler, .participant_summary_brawler_upgrade{
   float: left;
 };
@@ -150,21 +158,25 @@ body {
 }
 
 #bluetitle{
-  color: #33CCFF;
+  color: #3399FF;
   font-size: 30px;
 }
 
 #redtitle{
-  color: #FF0000;
+  color: #CC0000;
   font-size: 30px;
 }
 
 #redtable{
-  margin-left: 15%;
+  float: left;
+  margin-left: 30%;
   margin-top: 30px;
+  font-style: oblique;
 }
 
 #bluetable{
-  margin-left: 50%;
+  float: right;
+  margin-right: 30%;
   margin-top: 30px;
+  font-style: oblique;
 }
