@@ -19,7 +19,9 @@ class RiotApi
     loop do
       ap "Trying again : #{@res.code}, #{@res.to_hash.inspect}" if @res && @res.code != "200"
       queue_api_request TIME_OFFSET
-      break if ((@res = http.request(req)).code == '200')
+      @res = http.request(req)
+      return nil if @res.code == '500'
+      break if (http.request(req).code == '200')
     end
     format_response(@res)
   end

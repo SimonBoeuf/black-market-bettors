@@ -30,11 +30,7 @@ class Game < ActiveRecord::Base
     p['red_team'] = Team.build_from_json(json['teams'].find{|k| k['teamId'] == 200}.merge({"game_id" => game_id}))
     ActiveRecord::Base.transaction do
       @g = create(p)
-    end
-    ActiveRecord::Base.transaction do
       @g.participants.append Participant.build_from_array(json['participants'], @g) if json['participants']
-    end
-    ActiveRecord::Base.transaction do
       @g.timeline = Timeline.build_from_json(json['timeline'].merge({"game_id" => game_id}))
       @g.save
     end

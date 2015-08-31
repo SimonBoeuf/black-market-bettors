@@ -24,6 +24,7 @@ class TimelineMessagesController < WebsocketRails::BaseController
 
 
   def delete_user
+    CurrentGameSingleton.instance.remove_bettor @_event.connection.id
   end
 
 end
