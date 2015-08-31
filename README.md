@@ -9,6 +9,8 @@ Black Market Bettors is a small game that will challenge your analysis capabilit
 - When the game is over, you will see a screen displaying the winning team as well as your final score, which is : time spent on the winning team / game duration * 1000 (x1000 a score is always prettier)
 - Wait 10 seconds, and another game will be loaded. Have fun !
 
+## Demo
+[Here](http://black-market-bettors.herokuapp.com/) you go :)
 ## How it works
 - The first time a client connects to the server, a game Singleton is initialized. For every new connection, a websocket will be opened between server and client
 - The singleton will first chose a random game, then get its timeline using the API. Please not that every piece of data except for images are stored in databased and reused instead of calling API again.
@@ -31,8 +33,9 @@ Black Market Bettors is a small game that will challenge your analysis capabilit
     rake db:migrate
     rails s
 
-### Note
+### Notes
 - It might take a while to load games the first few times you launch the server, because you will have to request api for every single static data. Don't worry, it will get better.
+- There is a little problem with item sets at the moment. Don't be surprised if you happen to see multiple times the same tier 3 item on a player, it's just a ~~bug~~ feature
 
 ## Legal
 
