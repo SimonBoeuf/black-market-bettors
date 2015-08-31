@@ -404,8 +404,8 @@
   };
 
   function build_team_summary(side, data){
-    $("#"+side+"_team_summary_towers").text(data.tower_kills.toString());
-    $("#"+side+"_team_summary_gold").text(data.gold.toString());
+    $("#"+side+"_team_summary_towers").text(data.tower_kills);
+    $("#"+side+"_team_summary_gold").text((data.gold / 1000).toFixed().toString() + "k");
     $("#"+side+"_team_summary_drakes").text(data.drakes.toString());
     $("#"+side+"_team_summary_barons").text(data.barons.toString());
     $("#"+side+"_team_summary_score").text(data.total_kills.toString());
@@ -532,8 +532,8 @@
   function process_frame(frame){
     if (frame)
     {
-      $("#blue_team_summary_gold").text(frame.blue_team_gold);
-      $("#red_team_summary_gold").text(frame.red_team_gold);
+      $("#blue_team_summary_gold").text((frame.blue_team_gold / 1000).toFixed().toString() + "k");
+      $("#red_team_summary_gold").text((frame.red_team_gold.toFixed(1) / 1000).toFixed().toString() + "k");
     }
   };
 
