@@ -80,11 +80,11 @@ body {
 }
 
 #blue_team{
-  background-color: cornflowerblue;
+  background-color: rgba(101, 156, 239, 0.4);
 }
 
 #red_team{
-  background-color: #CC0000;
+  background-color: rgba(204, 00, 00, 0.4);
 }
 
 .team_summary{
@@ -148,7 +148,7 @@ body {
 }
 
 .participant_summary_items{
-  clear: both
+  //clear: both
 }
 .participant_summary_item{
   float: left

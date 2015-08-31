@@ -1,1 +1,1 @@
-GAME_SPEED = 5
+GAME_SPEED = 3
