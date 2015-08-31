@@ -215,21 +215,24 @@ table#red_participants{
   margin-left: 45%;
 }
 
-#victory_screen{
+#blue_victory{
   width: 50%;
-  height: 700px;
-  float: left;
+  height: 650px;
   margin-left: 25%;
 }
 
 .victory_score{
   width: 500px;
-  height: 200px;
+  height: 120px;
   text-align: center;
   font-size: 50px;
-  position: relative;
-  left: 680px;
-  margin: 0;
-  color: #3399FF;
+  margin-left: 680px;
+  margin-top: 1px;
+  color: #0099CC;
   font-weight: bold;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #0099CC;
+  background-color: rgba(0, 0, 0, 0.5);
 }
+
