@@ -358,6 +358,7 @@
 :javascript
   var participants_items = [[],[],[],[],[],[],[],[],[],[],[]];
   $(document).ready(function() {
+    launch_winner_screen({team_id: "BLUE_TEAM"});
     var dispatcher = new WebSocketRails("#{request.host_with_port}/websocket");
     dispatcher.on_open = function (data) {
         console.log('GL & HF !', data);
@@ -366,13 +367,13 @@
     dispatcher.bind('status_msg', function(ws) {
       switch(ws.status) {
         case "loading":
-          launch_loading_screen(ws.data);
+          //launch_loading_screen(ws.data);
           break;
         case "running":
-          launch_game_screen(ws.data);
+          //launch_game_screen(ws.data);
           break;
         case "ended":
-          launch_winner_screen(ws.data);
+          //launch_winner_screen(ws.data);
           break;
       };
     });
