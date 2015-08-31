@@ -14,14 +14,23 @@
       .champion.red_champion#red8
       .champion.red_champion#red9
   #game_screen.screen
+    .summary_container
+      .team_summary#blue_team_summary{style: "float: left; width: 40%"}
+        .team_summary_towers#blue_team_summary_towers
+        .team_summary_gold#blue_team_summary_gold
+        .team_summary_drakes#blue_team_summary_drakes
+        .team_summary_barons#blue_team_summary_barons
+        .team_summary_score#blue_team_summary_score
+      .minimap{style: "float: left;width: 20%;text-aling: center"}
+        %img{src: image_path("minimap.png"), style: "width: 100%"}
+      .team_summary#red_team_summary{style: "float: right; width: 40%"}
+        .team_summary_towers#red_team_summary_towers
+        .team_summary_gold#red_team_summary_gold
+        .team_summary_drakes#red_team_summary_drakes
+        .team_summary_barons#red_team_summary_barons
+        .team_summary_score#red_team_summary_score
     .side#blue
       .team_side#blue_team
-        .team_summary#blue_team_summary
-          .team_summary_towers#blue_team_summary_towers
-          .team_summary_gold#blue_team_summary_gold
-          .team_summary_drakes#blue_team_summary_drakes
-          .team_summary_barons#blue_team_summary_barons
-          .team_summary_score#blue_team_summary_score
         %table{:border => "3", :bordercolor => "black"}
           %tr
             %th{:bgcolor => "#9900CC", width: "48px"} Champions
@@ -153,12 +162,6 @@
                 .participant_summary_item#participant_summary_item_6_5
     .side#red
       .team_side#red_team
-        .team_summary#red_team_summary
-          .team_summary_towers#red_team_summary_towers
-          .team_summary_gold#red_team_summary_gold
-          .team_summary_drakes#red_team_summary_drakes
-          .team_summary_barons#red_team_summary_barons
-          .team_summary_score#red_team_summary_score
         %table{:border => "3", :bordercolor => "black"}
           %tr
             %th{:bgcolor => "#9900CC", width: "48px"} Champions
