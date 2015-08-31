@@ -212,7 +212,61 @@ table#red_participants{
 }
 
 .blue_bets{
-  margin-left: 45%;
+  width: 200px;
+  height: 110px;
+  text-align: center;
+  margin-left: 40%;
+  margin-top: 90px;
+}
+
+#blue_bet_button{
+  width: 100%;
+  height: 100%;
+  font-family: Arial, sans-serif;
+  font-size: 20px;
+  color: #999;
+  border-color: #999;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 5px;
+  background: #333;
+  text-decoration: none;
+  transition: background 0.5s linear 0s, color 0.5s linear 0s;
+}
+
+#blue_bet_button:hover{
+  cursor: pointer;
+  background-color:rgba(102, 0, 153, 0.8);
+  color: white;
+}
+
+.red_bets{
+  width: 200px;
+  height: 110px;
+  text-align: center;
+  margin-left: 40%;
+  margin-top: 90px;
+}
+
+#red_bet_button{
+  width: 100%;
+  height: 100%;
+  font-family: Arial, sans-serif;
+  font-size: 20px;
+  color: #999;
+  border-color: #999;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 5px;
+  background: #333;
+  text-decoration: none;
+  transition: background 0.5s linear 0s, color 0.5s linear 0s;
+}
+
+#red_bet_button:hover{
+  cursor: pointer;
+  background-color:rgba(102, 0, 153, 0.8);
+  color: white;
 }
 
 #blue_victory{
