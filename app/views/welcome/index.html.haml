@@ -337,9 +337,24 @@
             Bet on red !
     #map
   #winning_screen.screen
-    %img#blue_victory{src: image_path("blue_victory.png")}
+    #blue_victory
+      %img{src: image_path("blue_victory.png")}
       .blue_score
-        BLUE TEAM WIN !!! SCORE : 990/1000
+        %p
+          BLUE TEAM WINS !
+        %p
+          SCORE :
+          .player_score
+          \/1000
+    #red_victory
+      %img{src: image_path("red_victory.png")}
+      .red_score
+        %p
+          RED TEAM WINS !
+        %p
+          SCORE :
+          .player_score
+          \/1000
 :javascript
   var participants_items = [[],[],[],[],[],[],[],[],[],[],[]];
   $(document).ready(function() {
@@ -351,22 +366,19 @@
     dispatcher.bind('status_msg', function(ws) {
       switch(ws.status) {
         case "loading":
-          // Loading scree infos
           launch_loading_screen(ws.data);
           break;
         case "running":
-          // Game state
           launch_game_screen(ws.data);
           break;
         case "ended":
-          // Winning team
           launch_winner_screen(ws.data);
           break;
       };
     });
 
     dispatcher.bind('bet_results_msg', function(ws){
-      console.log(ws);
+      $(".player_score").text(Math.floor(ws.score).toString());
     });
 
     dispatcher.bind('bet_received_msg', function(ws){
@@ -413,6 +425,16 @@
   };
 
   function launch_winner_screen(data){
+    if (data.team_id == "BLUE_TEAM")
+    {
+        $("#blue_victory").show();
+        $("#red_victory").hide();
+    }
+    if (data.team_id == "RED_TEAM")
+    {
+        $("#blue_victory").hide();
+        $("#red_victory").show();
+    }
     $(".blue_bets").css("border","");
     $(".red_bets").css("border","");
     $(".screen").hide();
@@ -608,5 +630,3 @@
   function team_side(participantId){
     return (participantId < 6 ? "blue" : "red");
   };
-
-    //TODO : animations + transitions

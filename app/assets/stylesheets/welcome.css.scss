@@ -32,7 +32,7 @@ table#red_participants{
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
 }
-#loading_screen, #game_screen, #winner_screen{
+.screen{
   display: none;
 }
 
@@ -249,10 +249,10 @@ table#red_participants{
   font-size: 50px;
   margin-left: 680px;
   margin-top: 1px;
-  color: #0099CC;
+  color: rgb(204, 00, 00);
   font-weight: bold;
   border-width: 5px;
   border-style: solid;
-  border-color: #0099CC;
+  border-color: rgb(204, 00, 00);
   background-color: rgba(0, 0, 0, 0.5);
 }
