@@ -33,8 +33,10 @@ class CurrentGameSingleton
 
   def initialize
     @bettors = []
-    @observer_peers.each do |obs|
-      add_bettor obs.first.connection.id
+      if @observer_peers
+      @observer_peers.each do |obs|
+        add_bettor obs.first.connection.id
+      end
     end
     Thread.new do
       load_game
