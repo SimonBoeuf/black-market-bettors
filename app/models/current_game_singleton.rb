@@ -36,7 +36,7 @@ class CurrentGameSingleton
     end
   end
 
-  #private
+  private
 
   def initialize
     @bettors = []
