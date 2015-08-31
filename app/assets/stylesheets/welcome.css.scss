@@ -144,8 +144,14 @@ body {
 }
 
 .line1{
-  float: left
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
 }
+
+.participant_summary_brawler, .participant_summary_brawler_upgrade{
+  float: left;
+};
 
 .participant_summary_items{
   //clear: both
