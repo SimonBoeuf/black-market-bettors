@@ -16,24 +16,60 @@
   #game_screen.screen
     .summary_container
       .team_summary#blue_team_summary{style: "float: left; width: 40%"}
-        .team_summary_towers#blue_team_summary_towers
-        .team_summary_gold#blue_team_summary_gold
-        .team_summary_drakes#blue_team_summary_drakes
-        .team_summary_barons#blue_team_summary_barons
-        .team_summary_score#blue_team_summary_score
+        %table#bluetable{:border => "3", :bordercolor => "black"}
+          %caption#bluetitle BLUE TEAM
+          %tr
+            %th TOWERS
+            %th{width: "50px"}
+              %img{src: image_path("gold.png"), style: "width: 100%"}
+            %th
+              %img{src: image_path("drake.png"), style: "width: 100%"}
+            %th
+              %img{src: image_path("baron.png"), style: "width: 100%"}
+            %th
+              %img{src: image_path("score.png"), style: "width: 100%"}
+          %tr
+            %td
+              .team_summary_towers#blue_team_summary_towers
+            %td
+              .team_summary_gold#blue_team_summary_gold
+            %td
+              .team_summary_drakes#blue_team_summary_drakes
+            %td
+              .team_summary_barons#blue_team_summary_barons
+            %td
+              .team_summary_score#blue_team_summary_score
       .minimap{style: "float: left;width: 20%;text-aling: center"}
-        %img{src: image_path("minimap.png"), style: "width: 100%"}
+        %img{src: image_path("logo.png"), style: "width: 100%"}
       .team_summary#red_team_summary{style: "float: right; width: 40%"}
-        .team_summary_towers#red_team_summary_towers
-        .team_summary_gold#red_team_summary_gold
-        .team_summary_drakes#red_team_summary_drakes
-        .team_summary_barons#red_team_summary_barons
-        .team_summary_score#red_team_summary_score
+        %table#redtable{:border => "3", :bordercolor => "black"}
+          %caption#redtitle RED TEAM
+          %tr
+            %th TOWERS
+            %th{width: "50px"}
+              %img{src: image_path("gold.png"), style: "width: 100%"}
+            %th
+              %img{src: image_path("drake.png"), style: "width: 100%"}
+            %th
+              %img{src: image_path("baron.png"), style: "width: 100%"}
+            %th
+              %img{src: image_path("score.png"), style: "width: 100%"}
+          %tr
+            %td
+              .team_summary_towers#red_team_summary_towers
+            %td
+              .team_summary_gold#red_team_summary_gold
+            %td
+              .team_summary_drakes#red_team_summary_drakes
+            %td
+              .team_summary_barons#red_team_summary_barons
+            %td
+              .team_summary_score#red_team_summary_score
     .side#blue
       .team_side#blue_team
         %table{:border => "3", :bordercolor => "black"}
           %tr
-            %th{:bgcolor => "#9900CC", width: "48px"} Champions
+            %th{width: "48px"} Champions
             %th Level
             %th{:width => "60px"}K
             %th{:width => "60px"}D
@@ -164,7 +200,7 @@
       .team_side#red_team
         %table{:border => "3", :bordercolor => "black"}
           %tr
-            %th{:bgcolor => "#9900CC", width: "48px"} Champions
+            %th{width: "48px"} Champions
             %th Level
             %th{:width => "60px"}K
             %th{:width => "60px"}D
