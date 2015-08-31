@@ -198,6 +198,9 @@
                 .participant_summary_item#participant_summary_item_4_5
                 .participant_summary_item#participant_summary_item_5_5
                 .participant_summary_item#participant_summary_item_6_5
+        .blue_bets
+          %button#blue_bet_button
+            Bet on blue !
     .side#red
       .team_side#red_team
         %table{:border => "3", :bordercolor => "black"}
@@ -329,7 +332,9 @@
                 .participant_summary_item#participant_summary_item_4_10
                 .participant_summary_item#participant_summary_item_5_10
                 .participant_summary_item#participant_summary_item_6_10
-
+        .red_bets
+          %button#red_bet_button
+            Bet on red !
     #map
   #winner_screen.screen
     WINNER !
@@ -355,12 +360,35 @@
           break;
         case "ended":
           // Winning team
-          console.log(ws);
           launch_winner_screen(ws.data);
           break;
       };
     });
 
+    dispatcher.bind('bet_results_msg', function(ws){
+      console.log(ws);
+    });
+
+    dispatcher.bind('bet_received_msg', function(ws){
+      console.log(ws);
+      if(ws.team == "BLUE_TEAM"){
+        console.log("blue");
+        $(".blue_bets").css("border","1px solid blue");
+        $(".red_bets").css("border","");
+      }
+      if(ws.team == "RED_TEAM"){
+        console.log("red");
+        $(".red_bets").css("border","1px solid red");
+        $(".blue_bets").css("border","");
+      }
+    });
+
+    $("#blue_bet_button").click(function(){
+      dispatcher.trigger('bet', "BLUE_TEAM");
+    });
+    $("#red_bet_button").click(function(){
+      dispatcher.trigger('bet', "RED_TEAM");
+    });
     dispatcher.bind('event_msg', function(ws) {
       ws.type == 'event' ? process_event(ws.data) : process_frame(ws.data);
     });

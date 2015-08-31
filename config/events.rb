@@ -14,4 +14,5 @@ WebsocketRails::EventMap.describe do
   subscribe :client_connected, to: TimelineMessagesController, with_method: :client_connected
   subscribe :connection_closed, :to => TimelineMessagesController, :with_method => :delete_user
   subscribe :client_disconnected, to: TimelineMessagesController, with_method: :delete_user
+  subscribe :bet, to: TimelineMessagesController, with_method: :place_bet
 end

@@ -6,7 +6,7 @@ class TimelineMessagesController < WebsocketRails::BaseController
 
   def update msg
     msg[:status] ? send_message(:status_msg, msg) : send_message(:event_msg, msg)
-    send_message(:bet_results_msg, {score: CurrentGameSingleton.instance.bettor_score(@_event.data[:connection_id])}) if CurrentGameSingleton.intance.status == :ended
+    send_message(:bet_results_msg, {score: CurrentGameSingleton.instance.bettor_score(@_event.data[:connection_id])}) if CurrentGameSingleton.instance.status == :ended
   end
 
   def client_connected
@@ -17,8 +17,9 @@ class TimelineMessagesController < WebsocketRails::BaseController
     send_message(:status_msg, {status: "running", data: CurrentGameSingleton.instance.game_state}) if g.status == :running
   end
 
-  def place_bet team
-    CurrentGameSingleton.place_bet(@_event.data[:connection_id], team)
+  def place_bet
+    CurrentGameSingleton.instance.place_bet(@_event.connection.id, message)
+    send_message(:bet_received_msg, {team: message})
   end
 
 

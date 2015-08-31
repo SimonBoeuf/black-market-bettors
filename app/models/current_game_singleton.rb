@@ -17,7 +17,7 @@ class CurrentGameSingleton
   end
 
   def add_bettor bettor
-    @bettors.append({id: bettor, bets: []})
+    @bettors.append({id: bettor, bets: []}) if @bettors.select{|b| b[:id] == bettor}.empty?
   end
 
   def place_bet bettor, team
@@ -32,6 +32,10 @@ class CurrentGameSingleton
   #private
 
   def initialize
+    @bettors = []
+    @observer_peers.each do |obs|
+      add_bettor obs.first.connection.id
+    end
     Thread.new do
       load_game
       ActiveRecord::Base.connection.close
@@ -39,7 +43,6 @@ class CurrentGameSingleton
   end
 
   def load_game
-    @bettors = []
     region = SAMPLE_MATCHES.to_a.sample.first
     json = RiotApi::Match.get_by_id({region: region.downcase, id: SAMPLE_MATCHES[region].sample}, {includeTimeline: true})
     @champions = get_champions_from_json json
