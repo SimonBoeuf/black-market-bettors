@@ -20,16 +20,21 @@ class CurrentGameSingleton
     @bettors.append({id: bettor, bets: []}) if @bettors.select{|b| b[:id] == bettor}.empty?
   end
 
+  def remove_bettor bettor
+    @bettors.delete_if{|b| b.id == bettor}
+  end
+
   def place_bet bettor, team
     @bettors.select{|b| b[:id] == bettor}.first[:bets].select{|bet| bet[:end_time] == -1}.first[:end_time] = Time.now unless @bettors.select{|b| b[:id] == bettor}.first[:bets].empty?
     @bettors.select{|b| b[:id] == bettor}.first[:bets].append({team: team, start_time: Time.now, end_time: -1})
   end
 
   def bettor_score bettor
-    @bettors.select{|b| b[:id] == bettor}.first[:bets].select{|bet| bet[:team] == @game.winning_team.team_id}.sum{|bet| bet[:end_time].to_i - bet[:start_time].to_i}
+    score = @bettors.select{|b| b[:id] == bettor}.first[:bets].select{|bet| bet[:team] == @game.winning_team.team_id}.sum{|bet| bet[:end_time].to_f - bet[:start_time].to_f} / @game.matchDuration * 100 * GAME_SPEED
+    score > 100 ? 100 : score
   end
 
-  #private
+  private
 
   def initialize
     @bettors = []
@@ -45,8 +50,11 @@ class CurrentGameSingleton
   end
 
   def load_game
-    region = SAMPLE_MATCHES.to_a.sample.first
-    json = RiotApi::Match.get_by_id({region: region.downcase, id: SAMPLE_MATCHES[region].sample}, {includeTimeline: true})
+    json = nil
+    loop do
+      region = SAMPLE_MATCHES.to_a.sample.first
+      break if (!(json = RiotApi::Match.get_by_id({region: region.downcase, id: SAMPLE_MATCHES[region].sample}, {includeTimeline: true})).nil?)
+    end
     @champions = get_champions_from_json json
     change_status :loading
     notify_observers({status: @status, data: @champions})
@@ -112,7 +120,7 @@ class CurrentGameSingleton
     return 0 if !@msg[:frame] || !@next_msg[:frame]
     current_timestamp =  @msg[:event] ? @msg[:event].timestamp : @msg[:frame].timestamp
     next_timestamp = @next_msg[:event] ? @next_msg[:event].timestamp : @next_msg[:frame].timestamp
-    (next_timestamp - current_timestamp) / 1000 / GAME_SPEED
+    (next_timestamp - current_timestamp).to_f / 1000 / GAME_SPEED
   end
 
   def process_event
