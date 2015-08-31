@@ -25,8 +25,8 @@ class CurrentGameSingleton
     @bettors.select{|b| b[:id] == bettor}.first[:bets].append({team: team, start_time: Time.now, end_time: -1})
   end
 
-  def bettor_score bettor, winning_team
-    @bettors.select{|b| b[:id] == bettor}.first[:bets].select{|bet| bet[:team] == winning_team}.sum{|bet| bet[:end_time].to_i - bet[:start_time].to_i}
+  def bettor_score bettor
+    @bettors.select{|b| b[:id] == bettor}.first[:bets].select{|bet| bet[:team] == @game.winning_team.team_id}.sum{|bet| bet[:end_time].to_i - bet[:start_time].to_i}
   end
 
   #private

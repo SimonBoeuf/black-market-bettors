@@ -345,17 +345,17 @@
     dispatcher.bind('status_msg', function(ws) {
       switch(ws.status) {
         case "loading":
+          console.log("Loading");
           // Loading scree infos
-          console.log("loading");
           launch_loading_screen(ws.data);
           break;
         case "running":
           // Game state
-          console.log("running");
           launch_game_screen(ws.data);
           break;
         case "ended":
           // Winning team
+          console.log(ws);
           launch_winner_screen(ws.data);
           break;
       };
