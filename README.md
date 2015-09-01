@@ -28,10 +28,10 @@ Black Market Bettors is a small game that will challenge your analysis capabilit
 - Rename the file config/riot_api.yml.sample to config/riot_api.yml and place your api_key in it
 - You can set the game speed in config/initializers/game.rb (default: 10, which means game will last ten times shorter than it actually did)
 - Build a valid [database.yml](https://gist.github.com/erichurst/961978). file, which you will place in config/ folder as well
-- run
-    rake db:create
-    rake db:migrate
-    rails s
+-   ``bundle install``
+-   ``rake db:create``
+-   ``rake db:migrate``
+-   ``rails s``
 
 ### Notes
 - It might take a while to load games the first few times you launch the server, because you will have to request api for every single static data. Don't worry, it will get better.
