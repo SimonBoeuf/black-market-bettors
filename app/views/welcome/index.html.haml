@@ -16,18 +16,18 @@
   #game_screen.screen
     .summary_container
       .team_summary#blue_team_summary{style: "float: left; width: 40%"}
-        %table#bluetable{:border => "3", :bordercolor => "black"}
+        %table#bluetable{border: "3", bordercolor: "black"}
           %caption#bluetitle BLUE TEAM
           %tr
-            %th{width: "30px"}
-              %img{src: image_path("tower_blue.png")}
-            %th{width: "30px"}
-              %img{src: image_path("gold.png"), style: "width: 100%"}
-            %th{width: "30px"}
-              %img{src: image_path("score.png"), style: "width: 100%"}
-            %th{width: "30px"}
+            %th{width: "35px"}
+              %img{src: image_path("tower_blue.png"), style: "width: 80%"}
+            %th{width: "35px"}
+              %img{src: image_path("gold.png"), style: "width: 80%"}
+            %th{width: "35px"}
+              %img{src: image_path("score.png"), style: "width: 80%"}
+            %th{width: "35px"}
               %img{src: image_path("drake.png"), style: "width: 100%"}
-            %th{width: "30px"}
+            %th{width: "35px"}
               %img{src: image_path("baron.png"), style: "width: 100%"}
           %tr
             %td
@@ -43,18 +43,18 @@
       .minimap{style: "float: left;width: 20%;text-aling: center"}
         %img{src: image_path("logo.png"), style: "width: 100%"}
       .team_summary#red_team_summary{style: "float: right; width: 40%"}
-        %table#redtable{:border => "3", :bordercolor => "black"}
+        %table#redtable{border: "3", bordercolor: "black"}
           %caption#redtitle RED TEAM
           %tr
-            %th{width: "30px"}
-              %img{src: image_path("tower_red.png")}
-            %th{width: "30px"}
-              %img{src: image_path("gold.png"), style: "width: 100%"}
-            %th{width: "30px"}
-              %img{src: image_path("score.png"), style: "width: 100%"}
-            %th{width: "30px"}
+            %th{width: "35px"}
+              %img{src: image_path("tower_red.png"), style: "width: 80%"}
+            %th{width: "35px"}
+              %img{src: image_path("gold.png"), style: "width: 80%"}
+            %th{width: "35px"}
+              %img{src: image_path("score.png"), style: "width: 80%"}
+            %th{width: "35px"}
               %img{src: image_path("drake.png"), style: "width: 100%"}
-            %th{width: "30px"}
+            %th{width: "35px"}
               %img{src: image_path("baron.png"), style: "width: 100%"}
           %tr
             %td
@@ -69,15 +69,15 @@
               .team_summary_barons.line2#red_team_summary_barons
     .side#blue
       .team_side#blue_team
-        %table#blue_participants{:border => "3", :bordercolor => "black"}
+        %table#blue_participants{border: "3", bordercolor: "black"}
           %tr
             %th{width: "48px"} Champions
-            %th Level
-            %th{:width => "180px"} Brawler
-            %th{:width => "60px"}K
-            %th{:width => "60px"}D
-            %th{:width => "60px"}A
-            %th{:width => "390px"} Items
+            %th{width: "60px"}Level
+            %th{width: "102px"} Brawler
+            %th{width: "60px"}K
+            %th{width: "60px"}D
+            %th{width: "60px"}A
+            %th{width: "360px"} Items
           %tr
             %td
               .sprite_container
@@ -203,15 +203,15 @@
             Bet on blue !
     .side#red
       .team_side#red_team
-        %table#red_participants{:border => "3", :bordercolor => "black"}
+        %table#red_participants{border: "3", bordercolor: "black"}
           %tr
             %th{width: "48px"} Champions
-            %th Level
-            %th{:width => "180px"} Brawler
-            %th{:width => "60px"}K
-            %th{:width => "60px"}D
-            %th{:width => "60px"}A
-            %th{:width => "390px"} Items
+            %th{width: "60px"} Level
+            %th{width: "102px"} Brawler
+            %th{width: "60px"}K
+            %th{width: "60px"}D
+            %th{width: "60px"}A
+            %th{width: "390px"} Items
           %tr
             %td
               .sprite_container
@@ -383,11 +383,11 @@
 
     dispatcher.bind('bet_received_msg', function(ws){
       if(ws.team == "BLUE_TEAM"){
-        $(".blue_bets").css("border","5px solid #006699");
+        $(".blue_bets").css("border","5px solid #3399FF");
         $(".red_bets").css("border","");
       }
       if(ws.team == "RED_TEAM"){
-        $(".red_bets").css("border","5px solid #990000");
+        $(".red_bets").css("border","5px solid #FF3300");
         $(".blue_bets").css("border","");
       }
     });
