@@ -89,12 +89,13 @@ table#red_participants{
 }
 
 .team_side{
-  width: 100%;
+  width: 800px;
   height: 100%;
-  border-width: 4px;
+  border-width: 2px;
   border-style: solid;
   background-color: black;
-  margin: 0 ;
+  margin: 0;
+  margin-top: 6%;
 }
 
 .team_summary{
@@ -141,15 +142,17 @@ table#red_participants{
   margin: 0 auto;
   text-align: center;
   font-weight: bold;
+  font-size: 20px;
 }
 
-.line2{
+.line2 {
   width: 100%;
   margin: 0 auto;
   text-align: center;
   font-weight: bold;
+  font-size: 20px;
   color: white;
-  text-shadow: 2px 2px 2px black;
+  text-shadow: #000000 1px 1px, #000000 -1px 1px, #000000 -1px -1px, #000000 1px -1px;
 }
 
 .participant_summary_brawler, .participant_summary_brawler_upgrade{
@@ -181,6 +184,7 @@ table#red_participants{
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   background-color: rgba(101, 156, 239, 0.4);
+  margin-left: auto;
 }
 
 #bluetitle{
