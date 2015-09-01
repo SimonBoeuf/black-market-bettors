@@ -25,13 +25,16 @@ class CurrentGameSingleton
   end
 
   def place_bet bettor, team
-    @bettors.select{|b| b[:id] == bettor}.first[:bets].select{|bet| bet[:end_time] == -1}.first[:end_time] = Time.now unless @bettors.select{|b| b[:id] == bettor}.first[:bets].empty?
-    @bettors.select{|b| b[:id] == bettor}.first[:bets].append({team: team, start_time: Time.now, end_time: -1})
+    unless @msg[:frame].nil?
+      timestamp = (@msg[:event].nil? ? @msg[:frame].timestamp : @msg[:event].timestamp) / 1000.0
+      @bettors.select{|b| b[:id] == bettor}.first[:bets].select{|bet| bet[:end_time] == -1}.first[:end_time] = timestamp unless @bettors.select{|b| b[:id] == bettor}.first[:bets].empty?
+      @bettors.select{|b| b[:id] == bettor}.first[:bets].append({team: team, start_time: timestamp, end_time: -1})
+    end
   end
 
   def bettor_score bettor
     if @bettors.select{|b| b[:id] == bettor}.first
-      score = @bettors.select{|b| b[:id] == bettor}.first[:bets].select{|bet| bet[:team] == @game.winning_team.team_id}.sum{|bet| bet[:end_time].to_f - bet[:start_time].to_f} / @game.matchDuration * 1000 * GAME_SPEED
+      score = @bettors.select{|b| b[:id] == bettor}.first[:bets].select{|bet| bet[:team] == @game.winning_team.team_id}.sum{|bet| bet[:end_time].to_f - bet[:start_time].to_f} / @game.matchDuration * 1000
       score > 1000 ? 1000 : score
     end
   end
@@ -233,7 +236,7 @@ class CurrentGameSingleton
   def end_bets
     @bettors.each do |bettor|
       bettor[:bets].select{|bet| bet[:end_time] == -1}.each do |current|
-        current[:end_time] = Time.now
+        current[:end_time] = @game.timeline.frames.last.timestamp / 1000.0
       end
     end
   end
