@@ -32,7 +32,7 @@ class CurrentGameSingleton
   def bettor_score bettor
     if @bettors.select{|b| b[:id] == bettor}.first
       score = @bettors.select{|b| b[:id] == bettor}.first[:bets].select{|bet| bet[:team] == @game.winning_team.team_id}.sum{|bet| bet[:end_time].to_f - bet[:start_time].to_f} / @game.matchDuration * 1000 * GAME_SPEED
-      score > 100 ? 100 : score
+      score > 1000 ? 1000 : score
     end
   end
 

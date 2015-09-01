@@ -337,23 +337,23 @@
             Bet on red !
     #map
   #winning_screen.screen
-    #blue_victory
-      %img{src: image_path("blue_victory.png")}
-      .blue_score
+    #blue_victory.victory_container
+      %img.winner_img{src: image_path("blue_victory.png")}
+      .blue_score.score
         %p
           BLUE TEAM WINS !
         %p
           SCORE :
-          .player_score
+          %span.player_score
           \/1000
-    #red_victory
-      %img{src: image_path("red_victory.png")}
-      .red_score
+    #red_victory.victory_container
+      %img.winner_img{src: image_path("red_victory.png")}
+      .red_score.score
         %p
           RED TEAM WINS !
         %p
           SCORE :
-          .player_score
+          %span.player_score
           \/1000
 :javascript
   var participants_items = [[],[],[],[],[],[],[],[],[],[],[]];
