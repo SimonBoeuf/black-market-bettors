@@ -149,6 +149,7 @@ table#red_participants{
   text-align: center;
   font-weight: bold;
   color: white;
+  text-shadow: 2px 2px 2px black;
 }
 
 .participant_summary_brawler, .participant_summary_brawler_upgrade{
@@ -284,7 +285,7 @@ table#red_participants{
 
 .blue_score{
   color: #33FFFF;
-  border-color: #3366CC;
+  border-color: #0066FF;
   border-radius: 7px;
 }
 
