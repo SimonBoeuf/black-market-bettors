@@ -383,11 +383,11 @@
 
     dispatcher.bind('bet_received_msg', function(ws){
       if(ws.team == "BLUE_TEAM"){
-        $(".blue_bets").css("border","5px solid #006699");
+        $(".blue_bets").css("border","5px solid #3399FF");
         $(".red_bets").css("border","");
       }
       if(ws.team == "RED_TEAM"){
-        $(".red_bets").css("border","5px solid #990000");
+        $(".red_bets").css("border","5px solid #FF3300");
         $(".blue_bets").css("border","");
       }
     });
